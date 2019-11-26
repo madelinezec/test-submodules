@@ -204,7 +204,7 @@ async function getGitCommits() {
 }
 async function getGitPatchFromLocal(branchName){
   return new Promise((resolve, reject) => {
-    exec(`git diff origin/${repoName} > myPatch.patch`, function(error, stdout, stderr) {
+    exec(`git diff origin/${branchName} > myPatch.patch`, function(error, stdout, stderr) {
       if (error !== null) {
         console.log("error generating patch: ", error);
         reject(error);
