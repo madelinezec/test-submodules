@@ -202,7 +202,7 @@ async function getGitCommits() {
     });
   });
 }
-async function getGitPatchFromLocal(repoName){
+async function getGitPatchFromLocal(branchName){
   return new Promise((resolve, reject) => {
     exec(`git diff origin/${repoName} > myPatch.patch`, function(error, stdout, stderr) {
       if (error !== null) {
@@ -324,7 +324,7 @@ async function main() {
   }
 
   if(patchFlag === "local"){
-    const patch = await getGitPatchFromLocal(repoName);
+    const patch = await getGitPatchFromLocal(branchName);
     const payLoad = await createPayload(
       repoName,
       branchName,
