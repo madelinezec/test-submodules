@@ -98,7 +98,7 @@ function createPayload(
     branchName: branchNameArg,
     isFork: true,
     private: false,
-    isXlarge: true,
+    isXlarge: false,
     repoOwner: repoOwnerArg,
     url: urlArg,
     newHead: lastCommit,
