@@ -111,10 +111,9 @@ async function deletePatchFile() {
   return new Promise((resolve, reject) => {
     exec('rm myPatch.patch', (error) => {
       if (error !== null) {
-        console.log('exec error: ', error);
+        console.log('exec error deleting patch file: ', error);
         reject(error);
       }
-      console.log('removed the file!');
       resolve();
     });
   })
@@ -246,8 +245,7 @@ async function getGitPatchFromCommits(firstCommit, lastCommit) {
 
 function validateConfiguration() {
   let missingConfigs = [];
-  console.log("yo")
-  console.log(process.env);
+
   if (process.env.DB_NAME === undefined || process.env.DB_NAME === '') {
     console.log(process.env.DB_NAME )
     missingConfigs.push('DB_NAME');
