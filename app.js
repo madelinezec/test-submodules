@@ -223,7 +223,7 @@ async function getGitPatchFromCommits(firstCommit, lastCommit) {
         }
       });
     } else {
-      const patchCommand = `git diff ${firstCommit}^...${lastCommit} > myPatch.path`;
+      const patchCommand =  "git diff " + firstCommit + "^..." + lastCommit + " > myPatch.patch";
         //"git diff " + firstCommit + "^..." + lastCommit + " > myPatch.patch";
       exec(patchCommand, (error) => {
         if (error !== null) {
