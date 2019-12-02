@@ -246,16 +246,20 @@ async function getGitPatchFromCommits(firstCommit, lastCommit) {
 
 function validateConfiguration() {
   let missingConfigs = [];
+  console.log(process.env);
   if (process.env.DB_NAME === undefined || process.env.DB_NAME === '') {
+    console.log(process.env.DB_NAME )
     missingConfigs.push('DB_NAME');
   }
   if (process.env.COL_NAME === undefined || process.env.COL_NAME === '') {
+    console.log(process.env.COL_NAME);
     missingConfigs.push('COL_NAME');
   }
   if (process.env.USERNAME === undefined || process.env.USERNAME === '') {
     missingConfigs.push('USERNAME');
   }
   if (process.env.SECRET === undefined || process.env.SECRET === '') {
+    console.log(process.env.SECRET);
     missingConfigs.push('SECRET');
   }
   if (missingConfigs.length !== 0) {
