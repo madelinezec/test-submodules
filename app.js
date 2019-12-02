@@ -224,7 +224,6 @@ async function getGitPatchFromCommits(firstCommit, lastCommit) {
       });
     } else {
       const patchCommand =  "git diff " + firstCommit + "^..." + lastCommit + " > myPatch.patch";
-        //"git diff " + firstCommit + "^..." + lastCommit + " > myPatch.patch";
       exec(patchCommand, (error) => {
         if (error !== null) {
           console.log('error generating patch: ', error);
@@ -244,7 +243,7 @@ async function getGitPatchFromCommits(firstCommit, lastCommit) {
 }
 
 function validateConfiguration() {
-  let missingConfigs = [];
+  const missingConfigs = [];
 
   if (process.env.DB_NAME === undefined || process.env.DB_NAME === '') {
     console.log(process.env.DB_NAME )
@@ -267,29 +266,20 @@ function validateConfiguration() {
 }
 
 async function main() {
-  const buildSize = process.argv[2];
-  const patchFlag = process.argv[3];
+  const patchFlag = process.argv[2];
+  const buildSize = process.argv[3];
 
   validateConfiguration();
 
   let missingFlag = false;
-  if (buildSize === undefined) {
-    console.log('You need a build size flag("repo" or "world") in your make command');
-    missingFlag = true;
-  }
-
   if (patchFlag === undefined) {
     console.log('You need a patch flag("commit" or "local") in your make command');
-    missingFlag = true;
-  }
-
-  if (missingFlag === true) {
     return;
   }
 
   let invalidFlag = false;
 
-  if (buildSize !== 'world' && buildSize !== 'repo') {
+  if (buildSize!== undefined && buildSize !== 'world' && buildSize !== 'repo') {
     console.log('Invalid build size. Use "world" or "repo"');
     invalidFlag = true;
   }
