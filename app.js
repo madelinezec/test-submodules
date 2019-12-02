@@ -339,7 +339,7 @@ async function main() {
     );
   }
 
-  await deletePatchFile();
+  //await deletePatchFile();
 }
 
 main();
