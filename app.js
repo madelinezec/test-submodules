@@ -246,6 +246,7 @@ async function getGitPatchFromCommits(firstCommit, lastCommit) {
 
 function validateConfiguration() {
   let missingConfigs = [];
+  console.log("yo")
   console.log(process.env);
   if (process.env.DB_NAME === undefined || process.env.DB_NAME === '') {
     console.log(process.env.DB_NAME )
