@@ -2,6 +2,7 @@ const { promisify } = require('util');
 const exec = promisify(require('child_process').exec);
 const fs = require('fs');
 const { MongoClient } = require('mongodb');
+const shell = require('shelljs');
 
 function insertJob(payloadObj, jobTitle, jobUserName, jobUserEmail) {
   const dbName = process.env.DB_NAME;
@@ -244,6 +245,8 @@ async function getGitPatchFromCommits(firstCommit, lastCommit) {
 }
 
 function validateConfiguration() {
+
+  console.log(process.env)
   let missingConfigs = [];
 
   if (process.env.DB_NAME === undefined || process.env.DB_NAME === '') {
@@ -269,8 +272,17 @@ function validateConfiguration() {
 async function main() {
   const buildSize = process.argv[2];
   const patchFlag = process.argv[3];
-
-
+  
+  // await exec('. ~/.config/myConfix.txt', (error, stdout) => {
+  //   if (error) {
+  //     if (error.code === 1) {
+  //       console.log("The snootyenv file does not exist")
+  //       process.exit
+  //     }
+    
+  //   }
+  // })
+  console.log("hello!!!!")
   validateConfiguration();
 
   let missingFlag = false;
