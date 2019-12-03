@@ -186,8 +186,9 @@ async function getGitCommits() {
   });
 }
 async function getGitPatchFromLocal(branchName) {
+  
   return new Promise((resolve, reject) => {
-    exec(`git diff --submodule=diff > myPatch.patch`, (error) => {
+    exec(`git diff origin/test2 --ignore-submodules > myPatch.patch`, (error) => {
       if (error !== null) {
         console.log('error generating patch: ', error);
         reject(error);
@@ -331,12 +332,12 @@ async function main() {
       buildSize,
       newHead,
     );
-    insertJob(
-      payLoad,
-      `Github Push: ${userName}/repoName`,
-      userName,
-      userEmail,
-    );
+    // insertJob(
+    //   payLoad,
+    //   `Github Push: ${userName}/repoName`,
+    //   userName,
+    //   userEmail,
+    // );
   }
 
   //await deletePatchFile();
