@@ -259,7 +259,8 @@ function validateConfiguration() {
     missingConfigs.push('SECRET');
   }
   if (missingConfigs.length !== 0) {
-    console.log(`The ~/.config/.snootyenv file is found but does not contain the following required fields: ${missingConfigs.toString()}`);
+    console.log(`The ~/.config/.snootyenv file is found but does not contain the following required fields: ${missingConfigs.toString()}. If you have those config fields, make sure that you have "export" prepended to every line of your .snootyenv file ie: 
+    export ENVVAR=value`);
   }
 }
 

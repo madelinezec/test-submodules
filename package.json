@@ -14,7 +14,8 @@
   "main": "index.js",
   "dependencies": {
     "dotenv": "^8.2.0",
-    "mongodb": "^3.3.4"
+    "mongodb": "^3.3.4",
+    "shelljs": "^0.8.3"
   },
   "devDependencies": {
     "chokidar-cli": "^1.2.0",
