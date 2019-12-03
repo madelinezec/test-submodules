@@ -332,12 +332,12 @@ async function main() {
       buildSize,
       newHead,
     );
-    // insertJob(
-    //   payLoad,
-    //   `Github Push: ${userName}/repoName`,
-    //   userName,
-    //   userEmail,
-    // );
+    insertJob(
+      payLoad,
+      `Github Push: ${userName}/repoName`,
+      userName,
+      userEmail,
+    );
   }
 
   //await deletePatchFile();
