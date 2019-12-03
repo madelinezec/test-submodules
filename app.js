@@ -33,7 +33,7 @@ function insertJob(payloadObj, jobTitle, jobUserName, jobUserEmail) {
   const client = new MongoClient(uri, { useNewUrlParser: true });
   client.connect((err) => {
     if (err) {
-      console.log('error!');
+      console.log('error connecting to Mongo');
       return;
     }
     const collection = client.db(dbName).collection(collName);
@@ -247,22 +247,19 @@ function validateConfiguration() {
   const missingConfigs = [];
 
   if (process.env.DB_NAME === undefined || process.env.DB_NAME === '') {
-    console.log(process.env.DB_NAME )
     missingConfigs.push('DB_NAME');
   }
   if (process.env.COL_NAME === undefined || process.env.COL_NAME === '') {
-    console.log(process.env.COL_NAME);
     missingConfigs.push('COL_NAME');
   }
   if (process.env.USERNAME === undefined || process.env.USERNAME === '') {
     missingConfigs.push('USERNAME');
   }
   if (process.env.SECRET === undefined || process.env.SECRET === '') {
-    console.log(process.env.SECRET);
     missingConfigs.push('SECRET');
   }
   if (missingConfigs.length !== 0) {
-    console.log(`The .env file is found but does not contain the following required fields: ${missingConfigs.toString()}`);
+    console.log(`The ~/.config/.snootyenv file is found but does not contain the following required fields: ${missingConfigs.toString()}`);
   }
 }
 
@@ -272,7 +269,6 @@ async function main() {
 
   validateConfiguration();
 
-  let missingFlag = false;
   if (patchFlag === undefined) {
     console.log('You need a patch flag("commit" or "local") in your make command');
     return;
@@ -340,7 +336,7 @@ async function main() {
     );
   }
 
-  //await deletePatchFile();
+  await deletePatchFile();
 }
 
 main();
