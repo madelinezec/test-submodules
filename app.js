@@ -323,12 +323,12 @@ async function main() {
       newHead
     );
     console.log("hello!!!!!")
-    console.log(insertJob(
+    const success = await insertJob(
       payLoad,
       `Github Push: ${userName}/repoName`,
       userName,
       userEmail
-    ));
+    );
    
   }
 
@@ -344,17 +344,18 @@ async function main() {
       newHead
     );
     console.log("noooo!!!!")
-    console.log(insertJob(
+    
+    const success = await insertJob(
       payLoad,
       `Github Push: ${userName}/repoName`,
       userName,
       userEmail
-    ));
+    );
     
   }
 
   await deletePatchFile();
-  return;
+  return ;
 }
 
 main();
