@@ -207,8 +207,9 @@ async function getGitPatchFromLocal(branchName) {
 async function getGitPatchFromCommits(firstCommit, lastCommit) {
   //need to delete patch file?
   return new Promise((resolve, reject) => {
-    console.log("last commit is null!!!")
+    
     if (lastCommit === null) {
+      console.log("last commit is null!!!")
       const patchCommand = 'git show HEAD > myPatch.patch';
       exec(patchCommand, (error) => {
         if (error !== null) {
@@ -299,6 +300,7 @@ async function main() {
   const userEmail = await getGitEmail();
   const url = await getRepoInfo();
   const repoName = getRepoName(url);
+  const branchName = await getBranchName();
   const newHead = 'genericscsss';
   // toggle btwn create patch from commits or what you have saved locally
   if (patchFlag === 'commit') {
