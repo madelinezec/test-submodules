@@ -341,7 +341,11 @@ async function main() {
       userName,
       userEmail,
     );
-    return success;
+   if (success === true){
+      console.log("Success")
+  }
+   else{
+   console.log("Failure")
   }
 
   await deletePatchFile();
