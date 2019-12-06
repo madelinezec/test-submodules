@@ -328,7 +328,7 @@ async function main() {
       newHead
     );
     console.log("hello!!!!!")
-    const success = await insertJob(
+    const success = insertJob(
       payLoad,
       `Github Push: ${userName}/repoName`,
       userName,
@@ -352,7 +352,7 @@ async function main() {
     );
     console.log("noooo!!!!")
     
-    const success = await insertJob(
+    const success = insertJob(
       payLoad,
       `Github Push: ${userName}/repoName`,
       userName,
