@@ -322,13 +322,14 @@ async function main() {
       buildSize,
       newHead
     );
-    return insertJob(
+    console.log("hello!!!!!")
+    console.log(insertJob(
       payLoad,
       `Github Push: ${userName}/repoName`,
       userName,
       userEmail
-    )[0];
-    
+    ));
+   
   }
 
   if (patchFlag === "local") {
@@ -342,16 +343,18 @@ async function main() {
       buildSize,
       newHead
     );
-    return insertJob(
+    console.log("noooo!!!!")
+    console.log(insertJob(
       payLoad,
       `Github Push: ${userName}/repoName`,
       userName,
       userEmail
-    )[0];
+    ));
     
   }
 
   await deletePatchFile();
+  return;
 }
 
 main();
