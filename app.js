@@ -315,12 +315,13 @@ async function main() {
       buildSize,
       newHead,
     );
-    insertJob(
+    const success = insertJob(
       payLoad,
       `Github Push: ${userName}/repoName`,
       userName,
       userEmail,
     );
+    return(success)
   }
 
   if (patchFlag === 'local') {
@@ -334,12 +335,13 @@ async function main() {
       buildSize,
       newHead,
     );
-    insertJob(
+    const success = insertJob(
       payLoad,
       `Github Push: ${userName}/repoName`,
       userName,
       userEmail,
     );
+    return success;
   }
 
   await deletePatchFile();
