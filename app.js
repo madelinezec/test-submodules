@@ -332,11 +332,7 @@ async function main() {
       userName,
       userEmail
     );
-    if (success === true) {
-      console.log("Success");
-    } else {
-      console.log("Failure");
-    }
+    return success;
   }
 
   if (patchFlag === "local") {
@@ -356,11 +352,7 @@ async function main() {
       userName,
       userEmail
     );
-    if (success === true) {
-      console.log("Success");
-    } else {
-      console.log("Failure");
-    }
+    return success;
   }
   await deletePatchFile();
 }
