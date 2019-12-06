@@ -38,6 +38,7 @@ function insertJob(payloadObj, jobTitle, jobUserName, jobUserEmail) {
       result = {'success': false, 
       'message': 'error connecting to Mongo'}
       // return res;
+      return result;
     }
     const collection = client.db(dbName).collection(collName);
     collection.updateOne(filterDoc, updateDoc, { upsert: true }).then(
@@ -46,20 +47,23 @@ function insertJob(payloadObj, jobTitle, jobUserName, jobUserEmail) {
           result = {'success': true, 
           'message': `You successfully enqued a staging job to docs autobuilder. This is the record id: ${result.upsertedId}`}
           // return enqueueResult;
+          return result;
         }
         result = {'success': false, 
         'message': `Already existed: ${newJob}`}
         // return enqueueResult;
+        return result;
       },
       error => {
         result = {'success': false,
         'message': `There was an error enqueing a staging job to docs autobuilder. Here is the error: ${error}`}
+        return result;
         // return enqueueResult
       }
     );
     client.close();
   });
-  return result;
+  
 }
 
 function createPayload(
