@@ -329,6 +329,8 @@ async function main() {
       userName,
       userEmail
     );
+    await deletePatchFile();
+    return success;
    
   }
 
@@ -351,11 +353,12 @@ async function main() {
       userName,
       userEmail
     );
-    
+    console.log(success)
+    await deletePatchFile();
+    return success;
   }
 
-  await deletePatchFile();
-  return ;
+  
 }
 
 main();
