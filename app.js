@@ -85,6 +85,18 @@ function createPayload(
   return payload;
 }
 
+async function getBranchName() {
+  return new Promise((resolve, reject) => {
+    exec('git rev-parse --abbrev-ref HEAD', (error, stdout) => {
+      if (error !== null) {
+        console.log(`exec error: ${error}`);
+        reject(error);
+      }
+      resolve(stdout.replace('\n', ''));
+    });
+  });
+}
+
 // extract repo name from url
 function getRepoName(url) {
   let repoName = url.split('/');
@@ -195,6 +207,7 @@ async function getGitPatchFromLocal(branchName) {
 async function getGitPatchFromCommits(firstCommit, lastCommit) {
   //need to delete patch file?
   return new Promise((resolve, reject) => {
+    console.log("last commit is null!!!")
     if (lastCommit === null) {
       const patchCommand = 'git show HEAD > myPatch.patch';
       exec(patchCommand, (error) => {
@@ -212,9 +225,9 @@ async function getGitPatchFromCommits(firstCommit, lastCommit) {
         }
       });
     } else {
-      const patchCommand = `git diff ${firstCommit}^...${lastCommit} > myPatch.patch`
-      //console.log(`bad: git diff ${firstCommit}^...${lastCommit} > myPatch.patch`)
-      //const patchCommand =  "git diff " + firstCommit + "^..." + lastCommit + " > myPatch.patch";
+      //const patchCommand = `git diff ${firstCommit}^...${lastCommit} > myPatch.patch`
+      console.log(`bad: git diff ${firstCommit}^...${lastCommit} > myPatch.patch`)
+      const patchCommand =  "git diff " + firstCommit + "^..." + lastCommit + " > myPatch.patch";
       console.log(`good: `, patchCommand);
       exec(patchCommand, (error) => {
         if (error !== null) {
