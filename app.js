@@ -226,9 +226,9 @@ async function getGitPatchFromCommits(firstCommit, lastCommit) {
         }
       });
     } else {
-      //const patchCommand = `git diff ${firstCommit}^...${lastCommit} > myPatch.patch`
-      console.log(`bad: git diff ${firstCommit}^...${lastCommit} > myPatch.patch`)
-      const patchCommand =  "git diff " + firstCommit + "^..." + lastCommit + " > myPatch.patch";
+      const patchCommand = `git diff ${firstCommit}^...${lastCommit} > myPatch.patch`
+      //console.log(`bad: git diff ${firstCommit}^...${lastCommit} > myPatch.patch`)
+      //const patchCommand =  "git diff " + firstCommit + "^..." + lastCommit + " > myPatch.patch";
       console.log(`good: `, patchCommand);
       exec(patchCommand, (error) => {
         if (error !== null) {
