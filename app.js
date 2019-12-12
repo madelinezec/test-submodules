@@ -350,7 +350,6 @@ async function main() {
       buildSize,
       newHead
     );
-    console.log("noooo!!!!")
     
     const success = insertJob(
       payLoad,
@@ -359,7 +358,7 @@ async function main() {
       userEmail
     );
     console.log(success)
-    await deletePatchFile();
+    #await deletePatchFile();
     return success;
   }
 
