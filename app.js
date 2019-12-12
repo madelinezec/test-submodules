@@ -311,6 +311,8 @@ async function main() {
   const userName = await getGitUser();
   const userEmail = await getGitEmail();
   const url = await getRepoInfo();
+  console.log(url);
+  console.log(typeof url);
   const repoName = getRepoName(url);
   const branchName = await getBranchName();
   const newHead = "genericscsss";
