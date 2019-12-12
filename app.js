@@ -1,4 +1,4 @@
-const StagingUtils = require('stagingUtils');
+const StagingUtils = require('./stagingUtils');
 
 async function main() {
   const patchFlag = process.argv[2];
