@@ -4,7 +4,7 @@ async function main() {
   const patchFlag = process.argv[2];
   const buildSize = process.argv[3];
 
-  validateConfiguration();
+  StagingUtils.validateConfiguration();
 
   if (patchFlag === undefined) {
     console.log(
