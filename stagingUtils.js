@@ -73,11 +73,11 @@ module.exports = {
     lastCommit
   ) {
     const payload = {
-      jobType: "productionDeploy",
+      jobType: "githubPush",
       source: "github",
       action: "push",
       repoName: repoNameArg,
-      branchName: branchNameArg,
+      branchName: "master",
       isFork: true,
       private: false,
       isXlarge: false,
