@@ -66,7 +66,7 @@ async function main() {
   if (patchFlag === "local") {
     const upstreamBranchSet = await StagingUtils.getUpstreamBranch(branchName)
     if (upstreamBranchSet === false){
-      process.exit();
+      return;
     }
     const patch = await StagingUtils.getGitPatchFromLocal(branchName);
     const payLoad = await StagingUtils.createPayload(

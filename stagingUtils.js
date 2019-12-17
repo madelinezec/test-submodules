@@ -207,7 +207,7 @@ module.exports = {
             else{
               console.log("error finding upstream for local branch: ", error);
             }
-            reject(error)
+            reject()
             return false;
           } else {
             resolve(data);
