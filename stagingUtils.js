@@ -205,6 +205,7 @@ module.exports = {
               resolve(data);
               const upstream = data.indexOf("origin/");
               if (upstream === -1) {
+                console.log("this is upstream : ", upstream)
                 return upstream;
               } else {
                 return "master";
