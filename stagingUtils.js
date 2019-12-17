@@ -1,7 +1,7 @@
 const { promisify } = require("util");
 const exec = promisify(require("child_process").exec);
 const fs = require("fs");
-const { MongoClient } = require("mongodb");
+const { MongoClient } = require('mongodb');
 
 module.exports = {
   insertJob(payloadObj, jobTitle, jobUserName, jobUserEmail) {
@@ -77,7 +77,7 @@ module.exports = {
       source: "github",
       action: "push",
       repoName: repoNameArg,
-      branchName: "master",
+      branchName: branchNameArg,
       isFork: true,
       private: false,
       isXlarge: false,
@@ -195,6 +195,23 @@ module.exports = {
     });
   },
 
+  async getUpstreamBranch(branchName){
+    return new Promise((resolve, reject) => {
+      exec(
+        `git rev-parse --abbrev-ref --symbolic-full-name ${branchName}@{upstream}`,
+        error => {
+          if (error !== null) {
+            console.log("error generating patch: ", error);
+            reject(error);
+            return false;
+          } else {
+            resolve(data);
+            return true;
+          }
+        }
+      );
+    });
+  },
   async getGitPatchFromLocal(branchName) {
     return new Promise((resolve, reject) => {
       exec(
