@@ -65,7 +65,7 @@ module.exports = {
 
   createPayload(
     repoNameArg,
-    branchNameArg,
+    upstreamBranchName,
     repoOwnerArg,
     urlArg,
     patchArg,
@@ -77,7 +77,7 @@ module.exports = {
       source: "github",
       action: "push",
       repoName: repoNameArg,
-      branchName: branchNameArg,
+      branchName: upstreamBranchName,
       isFork: true,
       private: false,
       isXlarge: false,
@@ -200,18 +200,25 @@ module.exports = {
       try {
         exec(
           `git rev-parse --abbrev-ref --symbolic-full-name ${branchName}@{upstream}`,
-          error => {
+          (error, data) => {
             if (error === null) {
               resolve(data);
-              return true;
-            } else {
-              if (error.code === 128) {
-                console.log(
-                  'You have not set an upstream for your local branch. Please do so with this command:','\n\n', 'git branch -u origin',
-                  '\n\n');
+              const upstream = data.indexOf("origin/");
+              if (upstream === -1) {
+                return upstream;
               } else {
-                console.log('error finding upstream for local branch: ', error);
+                return "master";
               }
+            }
+            if (error.code === 128) {
+              console.log(
+                "You have not set an upstream for your local branch. Please do so with this command:",
+                "\n\n",
+                "git branch -u origin",
+                "\n\n"
+              );
+            } else {
+              console.log("error finding upstream for local branch: ", error);
             }
           }
         );

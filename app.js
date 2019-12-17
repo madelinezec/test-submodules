@@ -41,11 +41,15 @@ async function main() {
   
   // toggle btwn create patch from commits or what you have saved locally
   if (patchFlag === "commit") {
+    const upstreamBranchName = await StagingUtils.getUpstreamBranch(branchName)
+    if (upstreamBranchName === false){
+      return;
+    }
     const { firstCommit, lastCommit } = await StagingUtils.getGitCommits();
     const patch = await StagingUtils.getGitPatchFromCommits(firstCommit, lastCommit);
     const payLoad = await StagingUtils.createPayload(
       repoName,
-      branchName,
+      upstreamBranchName,
       userName,
       url,
       patch,
@@ -64,14 +68,14 @@ async function main() {
   }
 
   if (patchFlag === "local") {
-    const upstreamBranchSet = await StagingUtils.getUpstreamBranch(branchName)
-    if (upstreamBranchSet === false){
+    const upstreamBranchName = await StagingUtils.getUpstreamBranch(branchName)
+    if (upstreamBranchName === false){
       return;
     }
     const patch = await StagingUtils.getGitPatchFromLocal(branchName);
     const payLoad = await StagingUtils.createPayload(
       repoName,
-      branchName,
+      upstreamBranchName,
       userName,
       url,
       patch,
