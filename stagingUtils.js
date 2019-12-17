@@ -205,8 +205,9 @@ module.exports = {
               resolve(data);
               console.log("this is data: ", data, data.indexOf("origin/"))
               const upstream = data.indexOf("origin/");
-              console.log(upstream)
-              if (upstream === -1) {
+              console.log(upstream == -1);
+              console.log(upstream == 0);
+              if (upstream == -1) {
                 console.log("this is upstream : ", upstream)
                 return upstream;
               } else {
