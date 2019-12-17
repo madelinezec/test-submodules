@@ -1,7 +1,7 @@
 const { promisify } = require("util");
 const exec = promisify(require("child_process").exec);
 const fs = require("fs");
-const { MongoClient } = require('mongodb');
+const { MongoClient } = require("mongodb");
 
 module.exports = {
   insertJob(payloadObj, jobTitle, jobUserName, jobUserEmail) {
@@ -195,7 +195,7 @@ module.exports = {
     });
   },
 
-  async getUpstreamBranch(branchName){
+  async getUpstreamBranch(branchName) {
     return new Promise((resolve, reject) => {
       try {
         exec(
@@ -204,26 +204,21 @@ module.exports = {
             if (error === null) {
               resolve(data);
               return true;
-            } 
-            else{
-              console.log("not inside castch: ", error)
+            } else {
+              if (error.code === 128) {
+                console.log(
+                  "You have set an upstream for your local branch. Please do so with this command: \n git branch -u origin"
+                );
+              } else {
+                console.log("error finding upstream for local branch: ", error);
+              }
             }
-           
           }
         );
       } catch (error) {
-        console.log("we are in side the catch!!!!")
-          if(error.code === 128){
-            console.log("You have set an upstream for your local branch. Please do so with this command: \n git branch -u origin");
-          }
-          else{
-            console.log("error finding upstream for local branch: ", error);
-          }
-          reject()
-          return false;
-        
+        reject(error);
+        return false;
       }
-
     });
   },
   async getGitPatchFromLocal(branchName) {
@@ -308,6 +303,5 @@ module.exports = {
       );
       process.exit();
     }
-
   }
 };
