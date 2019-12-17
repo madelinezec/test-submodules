@@ -231,7 +231,7 @@ module.exports = {
   async getGitPatchFromLocal(branchName) {
     return new Promise((resolve, reject) => {
       exec(
-        `git diff origin/${branchName} --ignore-submodules > myPatch.patch`,
+        `git diff origin --ignore-submodules > myPatch.patch`,
         error => {
           if (error !== null) {
             console.log("error generating patch: ", error);
