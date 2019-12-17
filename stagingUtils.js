@@ -201,9 +201,13 @@ module.exports = {
         `git rev-parse --abbrev-ref --symbolic-full-name ${branchName}@{upstream}`,
         error => {
           if (error !== null) {
-            console.log("error generating patch: ", error);
-            console.log(error.code)
-            reject(error);
+            if(error.code === 128){
+              console.log("You have set an upstream for your local branch. Please do so with this command: \n git branch -u origin");
+            }
+            else{
+              console.log("error finding upstream for local branch: ", error);
+            }
+            reject(error)
             return false;
           } else {
             resolve(data);
