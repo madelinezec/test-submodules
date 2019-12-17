@@ -207,7 +207,7 @@ module.exports = {
             } else {
               if (error.code === 128) {
                 console.log(
-                  "You have set an upstream for your local branch. Please do so with this command: \n git branch -u origin"
+                  "You have not set an upstream for your local branch. Please do so with this command: \n git branch -u origin\n\n"
                 );
               } else {
                 console.log("error finding upstream for local branch: ", error);
