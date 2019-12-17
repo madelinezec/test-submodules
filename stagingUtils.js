@@ -201,29 +201,24 @@ module.exports = {
         exec(
           `git rev-parse --abbrev-ref --symbolic-full-name ${branchName}@{upstream}`,
           (error, data) => {
-            if (error === null) {
-              
-              console.log("this is data: ", data, data.indexOf("origin/"))
+            if (error !== null) {
+              if (error.code === 128) {
+                console.log(
+                  "You have not set an upstream for your local branch. Please do so with this command:",
+                  "\n\n",
+                  "git branch -u origin",
+                  "\n\n"
+                );
+              } else {
+                console.log("error finding upstream for local branch: ", error);
+              }
+            } else {
               const upstream = data.indexOf("origin/");
-              console.log(upstream == -1);
-              console.log(upstream == 0);
-              if (upstream == -1) {
-                console.log("this is upstream : ", upstream)
+              if (upstream === -1) {
                 return upstream;
               } else {
-                console.log("we here!")
                 return "master";
               }
-            }
-            if (error.code === 128) {
-              console.log(
-                "You have not set an upstream for your local branch. Please do so with this command:",
-                "\n\n",
-                "git branch -u origin",
-                "\n\n"
-              );
-            } else {
-              console.log("error finding upstream for local branch: ", error);
             }
           }
         );
@@ -235,23 +230,20 @@ module.exports = {
   },
   async getGitPatchFromLocal(branchName) {
     return new Promise((resolve, reject) => {
-      exec(
-        `git diff origin --ignore-submodules > myPatch.patch`,
-        error => {
-          if (error !== null) {
-            console.log("error generating patch: ", error);
-            reject(error);
-          } else {
-            fs.readFile("myPatch.patch", "utf8", (err, data) => {
-              if (err) {
-                console.log("error reading patch file: ", err);
-                reject(err);
-              }
-              resolve(data);
-            });
-          }
+      exec(`git diff origin --ignore-submodules > myPatch.patch`, error => {
+        if (error !== null) {
+          console.log("error generating patch: ", error);
+          reject(error);
+        } else {
+          fs.readFile("myPatch.patch", "utf8", (err, data) => {
+            if (err) {
+              console.log("error reading patch file: ", err);
+              reject(err);
+            }
+            resolve(data);
+          });
         }
-      );
+      });
     });
   },
   async getGitPatchFromCommits(firstCommit, lastCommit) {

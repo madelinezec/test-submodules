@@ -1,4 +1,4 @@
-const StagingUtils = require('./stagingUtils');
+const StagingUtils = require("./stagingUtils");
 
 async function main() {
   const patchFlag = process.argv[2];
@@ -31,22 +31,24 @@ async function main() {
     return;
   }
 
-
   const userName = await StagingUtils.getGitUser();
   const userEmail = await StagingUtils.getGitEmail();
   const url = await StagingUtils.getRepoInfo();
   const repoName = StagingUtils.getRepoName(url);
   const branchName = await StagingUtils.getBranchName();
   const newHead = "newHead";
-  
+
   // toggle btwn create patch from commits or what you have saved locally
   if (patchFlag === "commit") {
-    const upstreamBranchName = await StagingUtils.getUpstreamBranch(branchName)
-    if (upstreamBranchName === false){
+    const upstreamBranchName = await StagingUtils.getUpstreamBranch(branchName);
+    if (upstreamBranchName === false) {
       return;
     }
     const { firstCommit, lastCommit } = await StagingUtils.getGitCommits();
-    const patch = await StagingUtils.getGitPatchFromCommits(firstCommit, lastCommit);
+    const patch = await StagingUtils.getGitPatchFromCommits(
+      firstCommit,
+      lastCommit
+    );
     const payLoad = await StagingUtils.createPayload(
       repoName,
       upstreamBranchName,
@@ -61,18 +63,19 @@ async function main() {
       `Github Push: ${userName}/repoName`,
       userName,
       userEmail
-    )
-    if (success !== true){
-      console.log("Failure!")
+    );
+    if (success !== true) {
+      console.log("Failure!");
     }
   }
 
   if (patchFlag === "local") {
-    const upstreamBranchName = await StagingUtils.getUpstreamBranch(branchName)
-    if (upstreamBranchName === false){
+    const upstreamBranchName= await StagingUtils.getUpstreamBranch(branchName);
+    if (upstreamBranchName === false) {
       return;
     }
-    
+
+    console.log(upstreamBranchName);
     const patch = await StagingUtils.getGitPatchFromLocal(branchName);
     const payLoad = await StagingUtils.createPayload(
       repoName,
@@ -90,10 +93,9 @@ async function main() {
       userEmail
     );
 
-    if (success !== true){
-      console.log("Failure!")
+    if (success !== true) {
+      console.log("Failure!");
     }
-    
   }
 
   await StagingUtils.deletePatchFile();
