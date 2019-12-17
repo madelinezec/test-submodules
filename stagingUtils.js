@@ -205,9 +205,14 @@ module.exports = {
               resolve(data);
               return true;
             } 
+            else{
+              console.log("not inside castch: ", error)
+            }
+           
           }
         );
       } catch (error) {
+        console.log("we are in side the catch!!!!")
           if(error.code === 128){
             console.log("You have set an upstream for your local branch. Please do so with this command: \n git branch -u origin");
           }
