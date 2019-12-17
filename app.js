@@ -73,7 +73,7 @@ async function main() {
     const upstreamConfig = await StagingUtils.checkUpstreamConfiguration(branchName);
     const upstreamName = StagingUtils.getUpstreamName(upstreamConfig);
     console.log("it never resolves");
-    console.log(upstreamBranchName);
+    console.log(upstreamName);
     const patch = await StagingUtils.getGitPatchFromLocal(branchName);
     const payLoad = await StagingUtils.createPayload(
       repoName,
