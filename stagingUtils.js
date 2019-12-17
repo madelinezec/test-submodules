@@ -202,7 +202,7 @@ module.exports = {
           `git rev-parse --abbrev-ref --symbolic-full-name ${branchName}@{upstream}`,
           (error, data) => {
             if (error === null) {
-              resolve(data);
+              
               console.log("this is data: ", data, data.indexOf("origin/"))
               const upstream = data.indexOf("origin/");
               console.log(upstream == -1);
@@ -211,7 +211,7 @@ module.exports = {
                 console.log("this is upstream : ", upstream)
                 return upstream;
               } else {
-                consolw.log("we here!")
+                console.log("we here!")
                 return "master";
               }
             }
