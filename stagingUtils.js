@@ -203,6 +203,7 @@ module.exports = {
           (error, data) => {
             if (error === null) {
               resolve(data);
+              console.log("this is data: ", data, data.indexOf("origin/"))
               const upstream = data.indexOf("origin/");
               if (upstream === -1) {
                 console.log("this is upstream : ", upstream)
