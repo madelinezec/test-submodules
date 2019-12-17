@@ -197,24 +197,28 @@ module.exports = {
 
   async getUpstreamBranch(branchName){
     return new Promise((resolve, reject) => {
-      exec(
-        `git rev-parse --abbrev-ref --symbolic-full-name ${branchName}@{upstream}`,
-        error => {
-          if (error !== null) {
-            if(error.code === 128){
-              console.log("You have set an upstream for your local branch. Please do so with this command: \n git branch -u origin");
-            }
-            else{
-              console.log("error finding upstream for local branch: ", error);
-            }
-            reject()
-            return false;
-          } else {
-            resolve(data);
-            return true;
+      try {
+        exec(
+          `git rev-parse --abbrev-ref --symbolic-full-name ${branchName}@{upstream}`,
+          error => {
+            if (error === null) {
+              resolve(data);
+              return true;
+            } 
           }
-        }
-      );
+        );
+      } catch (error) {
+          if(error.code === 128){
+            console.log("You have set an upstream for your local branch. Please do so with this command: \n git branch -u origin");
+          }
+          else{
+            console.log("error finding upstream for local branch: ", error);
+          }
+          reject()
+          return false;
+        
+      }
+
     });
   },
   async getGitPatchFromLocal(branchName) {
