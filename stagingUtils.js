@@ -202,6 +202,7 @@ module.exports = {
         error => {
           if (error !== null) {
             console.log("error generating patch: ", error);
+            console.log(error.code)
             reject(error);
             return false;
           } else {
