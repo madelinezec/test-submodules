@@ -195,7 +195,17 @@ module.exports = {
     });
   },
 
-  async getUpstreamBranch(branchName) {
+
+  getUpstreamName(upstream) {
+    if (upstream !== -1) {
+      return upstream;
+    } else {
+      console.log("we here")
+      return "master";
+    }
+  },
+
+  async checkUpstreamConfiguration(branchName) {
     return new Promise((resolve, reject) => {
       try {
         exec(
@@ -213,19 +223,13 @@ module.exports = {
                 console.log("error finding upstream for local branch: ", error);
               }
             } else {
-              const upstream = data.indexOf("origin/");
-              if (upstream === -1) {
-                return upstream;
-              } else {
-                console.log("we here")
-                return "master";
-              }
+              resolve(data)
             }
           }
         );
       } catch (error) {
         reject(error);
-        return false;
+        process.exit();
       }
     });
   },
