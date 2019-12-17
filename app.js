@@ -72,7 +72,7 @@ async function main() {
     if (upstreamBranchName === false){
       return;
     }
-    console.log("thbis is upstream: ", upstreamBranchName)
+    
     const patch = await StagingUtils.getGitPatchFromLocal(branchName);
     const payLoad = await StagingUtils.createPayload(
       repoName,
