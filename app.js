@@ -72,9 +72,10 @@ async function main() {
   if (patchFlag === "local") {
     const upstreamBranchName= await StagingUtils.getUpstreamBranch(branchName);
     if (upstreamBranchName === false) {
+      console.log("we are returning")
       return;
     }
-
+    console.log("it never resolves")
     console.log(upstreamBranchName);
     const patch = await StagingUtils.getGitPatchFromLocal(branchName);
     const payLoad = await StagingUtils.createPayload(

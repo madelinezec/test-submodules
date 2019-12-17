@@ -217,6 +217,7 @@ module.exports = {
               if (upstream === -1) {
                 return upstream;
               } else {
+                console.log("we here")
                 return "master";
               }
             }
