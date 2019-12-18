@@ -245,7 +245,7 @@ module.exports = {
         const errormsg =
           "You have not set an upstream for your local branch. Please do so with this command: \
           \n\n \
-          git branch -u origin\
+          git branch -u <upstream-branch-name>\
           \n\n";
         throw errormsg;
       } else {
