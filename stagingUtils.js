@@ -236,6 +236,21 @@ module.exports = {
       }
     });
   },
+
+  async doesRemoteHaveLocalBranch(branchName){
+    return new Promise((resolve, reject) => {
+      exec(`git diff ${branchName} remotes/origin/${branchName}`, error => {
+      if(error !== null){
+        console.log(error, "\n\n", error.code);
+        
+        process.exit
+
+      }    
+    });
+  })
+  },
+
+
   async getGitPatchFromLocal(branchName) {
     return new Promise((resolve, reject) => {
       exec(`git diff origin --ignore-submodules > myPatch.patch`, error => {
