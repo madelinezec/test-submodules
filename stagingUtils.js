@@ -46,6 +46,7 @@ module.exports = {
               "You successfully enqued a staging job to docs autobuilder. This is the record id: ",
               result.upsertedId
             );
+            console.log(newJob);
             return true;
           }
           console.log("Already existed ", newJob);
