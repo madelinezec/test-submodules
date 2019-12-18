@@ -85,7 +85,6 @@ module.exports = {
       repoOwner: repoOwnerArg,
       url: urlArg,
       newHead: lastCommit,
-      buildSize: buildSizeArg,
       patch: patchArg
     };
 
