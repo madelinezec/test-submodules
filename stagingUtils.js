@@ -203,7 +203,7 @@ module.exports = {
       return upstream;
     } else {
       console.log("we here");
-      const upstream = 'master';
+      const upstream = 'master'.trim();
       return upstream;
     }
   },
