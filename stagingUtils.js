@@ -213,7 +213,9 @@ module.exports = {
       try {
         exec(
           `git rev-parse --abbrev-ref --symbolic-full-name ${branchName}@{upstream}`,
-          data => {
+          (error, data) => {
+            console.log(error)
+            console.log(data)
             resolve(data);
           }
         );
