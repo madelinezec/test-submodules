@@ -87,16 +87,16 @@ async function main() {
       newHead
     );
     console.log(payLoad)
-    const success = StagingUtils.insertJob(
-      payLoad,
-      `Github Push: ${userName}/repoName`,
-      userName,
-      userEmail
-    );
+    // const success = StagingUtils.insertJob(
+    //   payLoad,
+    //   `Github Push: ${userName}/repoName`,
+    //   userName,
+    //   userEmail
+    // );
 
-    if (success !== true) {
-      console.log("Failure!");
-    }
+    // if (success !== true) {
+    //   console.log("Failure!");
+    // }
   }
 
   await StagingUtils.deletePatchFile();
