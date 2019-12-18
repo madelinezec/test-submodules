@@ -238,20 +238,20 @@ module.exports = {
   },
 
   async doesRemoteHaveLocalBranch(branchName) {
-    return new Promise((resolve, reject) => {
+    // return new Promise((resolve, reject) => {
       try {
-        exec(`git diff ${branchName} remotes/origin/${branchName}`, data => {
-          resolve(data);
-        });
+        const {stdout, stderr} = await exec(`git diff ${branchName} remotes/origin/${branchName}`);
+        console.log(stdout)
       } catch (error) {
         if (error.code === 128) {
+          console.log("we are in error!")
           resolve(false);
           //we dont want to cancel the program
         } else {
           console.log("error retrieving branch info: ", error);
         }
       }
-    });
+    // });
   },
 
   async getGitPatchFromLocal(upstreamBranchName) {

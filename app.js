@@ -44,8 +44,8 @@ async function main() {
 
   console.log(upstreamName);
   const doesRemoteHaveLocalBranch = await StagingUtils.doesRemoteHaveLocalBranch(branchName);
-  
-  const branchNameForPayload = doesRemoteHaveLocalBranch ? branchName : upstreamName;
+  console.log(doesRemoteHaveLocalBranch);
+  const branchNameForPayload = doesRemoteHaveLocalBranch ? upstreamName : branchName;
 
   // toggle btwn create patch from commits or what you have saved locally
   if (patchFlag === "commit") {
@@ -86,16 +86,17 @@ async function main() {
       buildSize,
       newHead
     );
-    const success = StagingUtils.insertJob(
-      payLoad,
-      `Github Push: ${userName}/repoName`,
-      userName,
-      userEmail
-    );
+    console.log(payLoad)
+    // const success = StagingUtils.insertJob(
+    //   payLoad,
+    //   `Github Push: ${userName}/repoName`,
+    //   userName,
+    //   userEmail
+    // );
 
-    if (success !== true) {
-      console.log("Failure!");
-    }
+    // if (success !== true) {
+    //   console.log("Failure!");
+    // }
   }
 
   await StagingUtils.deletePatchFile();
