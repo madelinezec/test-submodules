@@ -269,7 +269,7 @@ module.exports = {
           return(false)
           //we dont want to cancel the program
         } else {
-          console.log("error retrieving branch info: ", error);
+          throw error;
         }
       }
     // });
