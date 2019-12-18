@@ -40,7 +40,7 @@ async function main() {
 
   const upstreamConfig = await StagingUtils.checkUpstreamConfiguration(branchName);
   console.log(upstreamConfig)
-  const upstreamName = StagingUtils.getUpstreamName(upstreamConfig);
+  const upstreamName = StagingUtils.getUpstreamName(upstreamConfig).trim(); //remove \n
 
   console.log(upstreamName);
   const doesRemoteHaveLocalBranch = await StagingUtils.doesRemoteHaveLocalBranch(branchName);

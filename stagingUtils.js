@@ -210,6 +210,7 @@ module.exports = {
 
   async checkUpstreamConfiguration(branchName) {
     console.log("we are here!!!!!");
+
     return new Promise((resolve, reject) => {
       try {
         exec(
@@ -255,6 +256,7 @@ module.exports = {
 
   async getGitPatchFromLocal(upstreamBranchName) {
     console.log("we are hereeeeeeee")
+    console.log(`git diff ${upstreamBranchName} --ignore-submodules > myPatch.patch`)
     return new Promise((resolve, reject) => {
       exec(`git diff ${upstreamBranchName} --ignore-submodules > myPatch.patch`, error => {
         if (error !== null) {
