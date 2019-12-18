@@ -44,7 +44,7 @@ async function main() {
 
   console.log(upstreamName);
   const doesRemoteHaveLocalBranch = await StagingUtils.doesRemoteHaveLocalBranch(branchName);
-  console.log(doesRemoteHaveLocalBranch);
+  console.log(doesRemoteHaveLocalBranch, doesRemoteHaveLocalBranch ? upstreamName : branchName);
   const branchNameForPayload = doesRemoteHaveLocalBranch ? upstreamName : branchName;
 
   // toggle btwn create patch from commits or what you have saved locally
