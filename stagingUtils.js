@@ -180,11 +180,11 @@ module.exports = {
       if (commitarray.length === 1) {
         const firstCommit = commitarray[0];
         const lastCommit = null;
-        resolve({ firstCommit, lastCommit });
+        return { firstCommit, lastCommit };
       } else {
         const firstCommit = commitarray[0];
         const lastCommit = commitarray[commitarray.length - 1];
-        resolve({ firstCommit, lastCommit });
+        return { firstCommit, lastCommit }
       }
     } catch (error) {
       throw error;
