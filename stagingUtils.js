@@ -208,30 +208,26 @@ module.exports = {
   },
 
   async checkUpstreamConfiguration(branchName) {
+    console.log("we are here!!!!!");
     return new Promise((resolve, reject) => {
       try {
         exec(
           `git rev-parse --abbrev-ref --symbolic-full-name ${branchName}@{upstream}`,
-          (error, data) => {
-            if (error !== null) {
-              if (error.code === 128) {
-                console.log(
-                  "You have not set an upstream for your local branch. Please do so with this command:",
-                  "\n\n",
-                  "git branch -u origin",
-                  "\n\n"
-                );
-              } else {
-                console.log("error finding upstream for local branch: ", error);
-              }
-            } else {
-              resolve(data);
-            }
+          data => {
+            resolve(data);
           }
         );
       } catch (error) {
-        reject(error);
-        process.exit();
+        if (error.code === 128) {
+          console.log(
+            "You have not set an upstream for your local branch. Please do so with this command:",
+            "\n\n",
+            "git branch -u origin",
+            "\n\n"
+          );
+        } else {
+          console.log("error finding upstream for local branch: ", error);
+        }
       }
     });
   },
@@ -240,20 +236,15 @@ module.exports = {
     return new Promise((resolve, reject) => {
       try {
         exec(`git diff ${branchName} remotes/origin/${branchName}`, error => {
-          if (error !== null) {
-            if (error.code === 128) {
-              resolve(false);
-              //we dont want to cancel the program
-            } else {
-              console.log("error retrieving branch info: ", error);
-            }
-          } else {
-            resolve(data);
-          }
+          resolve(data);
         });
       } catch (error) {
-        reject(error);
-        process.exit();
+        if (error.code === 128) {
+          resolve(false);
+          //we dont want to cancel the program
+        } else {
+          console.log("error retrieving branch info: ", error);
+        }
       }
     });
   },
