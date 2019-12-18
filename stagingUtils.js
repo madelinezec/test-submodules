@@ -235,7 +235,7 @@ module.exports = {
   async doesRemoteHaveLocalBranch(branchName) {
     return new Promise((resolve, reject) => {
       try {
-        exec(`git diff ${branchName} remotes/origin/${branchName}`, error => {
+        exec(`git diff ${branchName} remotes/origin/${branchName}`, data => {
           resolve(data);
         });
       } catch (error) {
