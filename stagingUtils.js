@@ -195,15 +195,14 @@ module.exports = {
     });
   },
 
-
   getUpstreamName(upstream) {
     const upstreamInd = upstream.indexOf("origin/");
-    console.log("hi we are this!!!! ", upstreamInd, upstreamInd !== -1)
+    console.log("hi we are this!!!! ", upstreamInd, upstreamInd !== -1);
     if (upstreamInd === -1) {
-      console.log(upstream)
+      console.log(upstream);
       return upstream;
     } else {
-      console.log("we here")
+      console.log("we here");
       return "master";
     }
   },
@@ -226,7 +225,7 @@ module.exports = {
                 console.log("error finding upstream for local branch: ", error);
               }
             } else {
-              resolve(data)
+              resolve(data);
             }
           }
         );
@@ -237,22 +236,27 @@ module.exports = {
     });
   },
 
-  async doesRemoteHaveLocalBranch(branchName){
+  async doesRemoteHaveLocalBranch(branchName) {
     return new Promise((resolve, reject) => {
-      exec(`git diff ${branchName} remotes/origin/${branchName}`, error => {
-      if(error !== null){
-        if(error.code === 128){
-          reject(false);
-        }
-        else{
-          console.log("error retrieving branch info: ", error);
-        }
+      try {
+        exec(`git diff ${branchName} remotes/origin/${branchName}`, error => {
+          if (error !== null) {
+            if (error.code === 128) {
+              resolve(false);
+              //we dont want to cancel the program
+            } else {
+              console.log("error retrieving branch info: ", error);
+            }
+          } else {
+            resolve(data);
+          }
+        });
+      } catch (error) {
+        reject(error);
+        process.exit();
       }
-        resolve(true)
     });
-  })
   },
-
 
   async getGitPatchFromLocal(branchName) {
     return new Promise((resolve, reject) => {
