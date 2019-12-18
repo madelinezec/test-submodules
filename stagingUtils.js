@@ -251,9 +251,10 @@ module.exports = {
     });
   },
 
-  async getGitPatchFromLocal(branchName) {
+  async getGitPatchFromLocal(upstreamBranchName) {
+    console.log("we are hereeeeeeee")
     return new Promise((resolve, reject) => {
-      exec(`git diff origin --ignore-submodules > myPatch.patch`, error => {
+      exec(`git diff ${upstreamBranchName} --ignore-submodules > myPatch.patch`, error => {
         if (error !== null) {
           console.log("error generating patch: ", error);
           reject(error);

@@ -39,8 +39,9 @@ async function main() {
   const newHead = "newHead";
 
   const upstreamConfig = await StagingUtils.checkUpstreamConfiguration(branchName);
+  console.log(upstreamConfig)
   const upstreamName = StagingUtils.getUpstreamName(upstreamConfig);
-  console.log("it never resolves");
+
   console.log(upstreamName);
   const doesRemoteHaveLocalBranch = await StagingUtils.doesRemoteHaveLocalBranch(branchName);
   
@@ -75,7 +76,7 @@ async function main() {
   }
 
   if (patchFlag === "local") {
-    const patch = await StagingUtils.getGitPatchFromLocal(branchName);
+    const patch = await StagingUtils.getGitPatchFromLocal(upstreamName);
     const payLoad = await StagingUtils.createPayload(
       repoName,
       branchNameForPayload,
