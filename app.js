@@ -38,15 +38,13 @@ async function main() {
   const branchName = await StagingUtils.getBranchName();
   const newHead = "newHead";
 
-
-
   const upstreamConfig = await StagingUtils.checkUpstreamConfiguration(branchName);
   const upstreamName = StagingUtils.getUpstreamName(upstreamConfig);
   console.log("it never resolves");
   console.log(upstreamName);
   const doesRemoteHaveLocalBranch = await StagingUtils.doesRemoteHaveLocalBranch(branchName);
-
-  // git diff origin --ignore-submodules > myPatch.patch
+  
+  const branchNameForPayload = doesRemoteHaveLocalBranch ? branchName : upstreamName;
 
   // toggle btwn create patch from commits or what you have saved locally
   if (patchFlag === "commit") {
@@ -58,7 +56,7 @@ async function main() {
     );
     const payLoad = await StagingUtils.createPayload(
       repoName,
-      upstreamName,
+      branchNameForPayload,
       userName,
       url,
       patch,
@@ -80,7 +78,7 @@ async function main() {
     const patch = await StagingUtils.getGitPatchFromLocal(branchName);
     const payLoad = await StagingUtils.createPayload(
       repoName,
-      upstreamName,
+      branchNameForPayload,
       userName,
       url,
       patch,

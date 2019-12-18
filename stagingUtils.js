@@ -241,11 +241,14 @@ module.exports = {
     return new Promise((resolve, reject) => {
       exec(`git diff ${branchName} remotes/origin/${branchName}`, error => {
       if(error !== null){
-        console.log(error, "\n\n", error.code);
-        
-        process.exit
-
-      }    
+        if(error.code === 128){
+          reject(false);
+        }
+        else{
+          console.log("error retrieving branch info: ", error);
+        }
+      }
+        resolve(true)
     });
   })
   },
