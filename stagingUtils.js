@@ -242,10 +242,12 @@ module.exports = {
       try {
         const {stdout, stderr} = await exec(`git diff ${branchName} remotes/origin/${branchName}`);
         console.log(stdout)
+        return true
       } catch (error) {
         if (error.code === 128) {
           console.log("we are in error!")
-          resolve(false);
+          // resolve(false);
+          return(false)
           //we dont want to cancel the program
         } else {
           console.log("error retrieving branch info: ", error);
