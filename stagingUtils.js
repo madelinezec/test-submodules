@@ -211,30 +211,49 @@ module.exports = {
   async checkUpstreamConfiguration(branchName) {
     console.log("we are here!!!!!");
 
-    return new Promise((resolve, reject) => {
-      try {
-        exec(
-          `git rev-parse --abbrev-ref --symbolic-full-name ${branchName}@{upstream}`,
-          (error, data) => {
-            console.log("inside here!!!!")
-            console.log(error)
-            console.log(data)
-            resolve(data);
-          }
+
+    try {
+      const {stdout, stderr} = await exec(`git rev-parse --abbrev-ref --symbolic-full-name ${branchName}@{upstream}`);
+      console.log(3333, stdout)
+      return stdout
+    } catch (error) {
+      if (error.code === 128) {
+        console.log(
+          "You have not set an upstream for your local branch. Please do so with this command:",
+          "\n\n",
+          "git branch -u origin",
+          "\n\n"
         );
-      } catch (error) {
-        if (error.code === 128) {
-          console.log(
-            "You have not set an upstream for your local branch. Please do so with this command:",
-            "\n\n",
-            "git branch -u origin",
-            "\n\n"
-          );
-        } else {
-          console.log("error finding upstream for local branch: ", error);
-        }
+      } else {
+        console.log("error finding upstream for local branch: ", error);
       }
-    });
+    }
+
+
+    // return new Promise((resolve, reject) => {
+    //   try {
+    //     exec(
+    //       `git rev-parse --abbrev-ref --symbolic-full-name ${branchName}@{upstream}`,
+    //       (error, data) => {
+    //         console.log("inside here!!!!")
+    //         console.log(error)
+    //         console.log(data)
+    //         resolve(data);
+    //       }
+    //     );
+    //   } catch (error) {
+    //     if (error.code === 128) {
+    //       console.log(
+    //         "You have not set an upstream for your local branch. Please do so with this command:",
+    //         "\n\n",
+    //         "git branch -u origin",
+    //         "\n\n"
+    //       );
+    //     } else {
+    //       console.log("error finding upstream for local branch: ", error);
+    //     }
+    //   }
+    // });
   },
 
   async doesRemoteHaveLocalBranch(branchName) {
