@@ -203,7 +203,7 @@ module.exports = {
       return upstream;
     } else {
       console.log("we here");
-      const upstream = 'master'.trim();
+      const upstream = 'master';
       return upstream;
     }
   },
@@ -211,21 +211,21 @@ module.exports = {
   async checkUpstreamConfiguration(branchName) {
     console.log("we are here!!!!!");
 
-
     try {
       const {stdout, stderr} = await exec(`git rev-parse --abbrev-ref --symbolic-full-name ${branchName}@{upstream}`);
       console.log(3333, stdout)
       return stdout
     } catch (error) {
       if (error.code === 128) {
-        console.log(
-          "You have not set an upstream for your local branch. Please do so with this command:",
-          "\n\n",
-          "git branch -u origin",
-          "\n\n"
-        );
+        const errormsg = 
+          "You have not set an upstream for your local branch. Please do so with this command: \
+          \n\n \
+          git branch -u origin\
+          \n\n";
+        throw errormsg;
       } else {
-        console.log("error finding upstream for local branch: ", error);
+        throw error;
+        
       }
     }
 
