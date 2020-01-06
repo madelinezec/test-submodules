@@ -48,7 +48,7 @@ module.exports = {
             );
             return true;
           }
-          console.log("Already existed ", newJob);
+          console.err("This job already exists ");
           return "Already Existed";
         },
         error => {
