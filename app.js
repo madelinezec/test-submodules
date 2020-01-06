@@ -83,7 +83,7 @@ async function main() {
       newHead
     );
 
-    const success = StagingUtils.insertJob(
+    const success = await StagingUtils.insertJob(
       payLoad,
       `Github Push: ${userName}/repoName`,
       userName,
