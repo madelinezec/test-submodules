@@ -35,7 +35,7 @@ module.exports = {
     const client = new MongoClient(uri, { useUnifiedTopology: true, useNewUrlParser: true });
     client.connect(err => {
       if (err) {
-        console.log("error connecting to Mongo");
+        console.err("error connecting to Mongo");
         return err;
       }
       const collection = client.db(dbName).collection(collName);
@@ -52,7 +52,7 @@ module.exports = {
           return "Already Existed";
         },
         error => {
-          console.log(
+          console.err(
             "There was an error enqueing a staging job to docs autobuilder. Here is the error: ",
             error
           );
@@ -94,7 +94,7 @@ module.exports = {
     return new Promise((resolve, reject) => {
       exec("git rev-parse --abbrev-ref HEAD", (error, stdout) => {
         if (error !== null) {
-          console.log(`exec error: ${error}`);
+          console.err(`exec error: ${error}`);
           reject(error);
         }
         resolve(stdout.replace("\n", ""));
@@ -116,7 +116,7 @@ module.exports = {
     return new Promise((resolve, reject) => {
       exec("rm myPatch.patch", error => {
         if (error !== null) {
-          console.log("exec error deleting patch file: ", error);
+          console.err("exec error deleting patch file: ", error);
           reject(error);
         }
         resolve("successfully removed patch file");
@@ -128,7 +128,7 @@ module.exports = {
     return new Promise((resolve, reject) => {
       exec("git config --get remote.origin.url", (error, stdout) => {
         if (error !== null) {
-          console.log(`exec error: ${error}`);
+          console.err(`exec error: ${error}`);
           reject(error);
         }
 
@@ -142,7 +142,7 @@ module.exports = {
     return new Promise((resolve, reject) => {
       exec("git config --global user.email", (error, stdout) => {
         if (error !== null) {
-          console.log(`exec error: ${error}`);
+          console.err(`exec error: ${error}`);
           reject(error);
         } else {
           resolve(stdout.replace("\n", ""));
@@ -155,7 +155,7 @@ module.exports = {
     return new Promise((resolve, reject) => {
       exec("git config --global user.name", (error, stdout) => {
         if (error !== null) {
-          console.log(`exec error: ${error}`);
+          console.err(`exec error: ${error}`);
           reject(error);
         } else {
           resolve(stdout.replace("\n", ""));
@@ -247,7 +247,7 @@ module.exports = {
         `git diff ${upstreamBranchName} --ignore-submodules > myPatch.patch`,
         error => {
           if (error !== null) {
-            console.log("error generating patch: ", error);
+            console.err("error generating patch: ", error);
             reject(error);
           } else {
             fs.readFile("myPatch.patch", "utf8", (err, data) => {
@@ -269,7 +269,7 @@ module.exports = {
         const patchCommand = "git show HEAD > myPatch.patch";
         exec(patchCommand, error => {
           if (error !== null) {
-            console.log("error generating patch: ", error);
+            console.err("error generating patch: ", error);
             reject(error);
           } else {
             fs.readFile("myPatch.patch", "utf8", (err, data) => {
@@ -285,7 +285,7 @@ module.exports = {
         const patchCommand = `git diff ${firstCommit}^...${lastCommit} > myPatch.patch`;
         exec(patchCommand, error => {
           if (error !== null) {
-            console.log("error generating patch: ", error);
+            console.err("error generating patch: ", error);
             reject(error);
           } else {
             fs.readFile("myPatch.patch", "utf8", (err, data) => {
@@ -317,8 +317,7 @@ module.exports = {
       missingConfigs.push("SECRET");
     }
     if (missingConfigs.length !== 0) {
-      console.log(missingConfigs);
-      console.log(
+      console.err(
         `The ~/.config/.snootyenv file is found but does not contain the following required fields: ${missingConfigs.toString()}`
       );
       process.exit();

@@ -69,8 +69,8 @@ async function main() {
       `Github Push: ${userName}/repoName`,
       userName,
       userEmail
-    , function(returnValue){
-      console.log(returnValue)
+    , function(){
+      console.log("I am here", 99999999)
     }
     );
     // if (success !== true) {
@@ -95,7 +95,7 @@ async function main() {
         `Github Push: ${userName}/repoName`,
         userName,
         userEmail
-      , function(returnValue){
+      , function(){
         console.log("I am here", 99999999)
       }
       );
