@@ -61,21 +61,16 @@ async function main() {
       newHead
     );
 
-    // myFunction(query, function(returnValue) {
-    //   // use the return value here instead of like a regular (non-evented) return value
-    // });
-    /*const success = */StagingUtils.insertJob(
-      payLoad,
-      `Github Push: ${userName}/repoName`,
-      userName,
-      userEmail
-    , function(){
-      console.log("I am here", 99999999)
+    try {
+      StagingUtils.insertJob(
+        payLoad,
+        `Github Push: ${userName}/repoName`,
+        userName,
+        userEmail
+      );
+    } catch (error) {
+      console.err(err);
     }
-    );
-    // if (success !== true) {
-    //   console.log("Failure! ", success);
-    // }
   }
 
   if (patchFlag === "local") {
@@ -90,18 +85,18 @@ async function main() {
       newHead
     );
 
-      /*const success = */StagingUtils.insertJob(
+    try {
+      StagingUtils.insertJob(
         payLoad,
         `Github Push: ${userName}/repoName`,
         userName,
         userEmail
-      , function(){
-        console.log("I am here", 99999999)
-      }
       );
-      // if (success !== true) {
-      //   console.log("Failure! ", success);
-      // }
+    } catch (error) {
+      console.err(err);
+    }
+
+
   }
 
   await StagingUtils.deletePatchFile();
