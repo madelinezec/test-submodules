@@ -32,7 +32,7 @@ module.exports = {
     const updateDoc = { $setOnInsert: newJob };
 
     const uri = `mongodb+srv://${username}:${secret}@cluster0-ylwlz.mongodb.net/test?retryWrites=true&w=majority`;
-    const client = new MongoClient(uri, { useNewUrlParser: true });
+    const client = new MongoClient(uri, { useUnifiedTopology: true, useNewUrlParser: true });
     client.connect(err => {
       if (err) {
         console.log("error connecting to Mongo");
