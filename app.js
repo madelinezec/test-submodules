@@ -60,7 +60,7 @@ async function main() {
       buildSize,
       newHead
     );
-    const success = await StagingUtils.insertJob(
+    const success = StagingUtils.insertJob(
       payLoad,
       `Github Push: ${userName}/repoName`,
       userName,
@@ -83,7 +83,7 @@ async function main() {
       newHead
     );
 
-    const success = await StagingUtils.insertJob(
+    const success = StagingUtils.insertJob(
       payLoad,
       `Github Push: ${userName}/repoName`,
       userName,
