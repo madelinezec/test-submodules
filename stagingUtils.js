@@ -4,7 +4,7 @@ const fs = require("fs");
 const { MongoClient } = require("mongodb");
 
 module.exports = {
-  insertJob(payloadObj, jobTitle, jobUserName, jobUserEmail) {
+  async insertJob(payloadObj, jobTitle, jobUserName, jobUserEmail) {
     const dbName = process.env.DB_NAME;
     const collName = process.env.COL_NAME;
     const username = process.env.USERNAME;
@@ -32,35 +32,67 @@ module.exports = {
     const updateDoc = { $setOnInsert: newJob };
 
     const uri = `mongodb+srv://${username}:${secret}@cluster0-ylwlz.mongodb.net/test?retryWrites=true&w=majority`;
-    const client = new MongoClient(uri, { useUnifiedTopology: true, useNewUrlParser: true });
-    client.connect(err => {
-      if (err) {
-        console.log("error connecting to Mongo");
-        return err;
-      }
-      const collection = client.db(dbName).collection(collName);
-      collection.updateOne(filterDoc, updateDoc, { upsert: true }).then(
-        result => {
-          if (result.upsertedId) {
-            console.log(
-              "You successfully enqued a staging job to docs autobuilder. This is the record id: ",
-              result.upsertedId
-            );
-            return true;
-          }
-          console.log("Already existed ", newJob);
-          return "Already Existed";
-        },
-        error => {
-          console.log(
-            "There was an error enqueing a staging job to docs autobuilder. Here is the error: ",
-            error
-          );
-          return error;
+    const client = new MongoClient(uri, { useUnifiedTopology: true, useNewUrlParser: true });  
+    return new Promise((resolve, reject) => {
+      client.connect(err => {
+        if (err) {
+          console.log("error connecting to Mongo");
+          return err;
         }
-      );
-      client.close();
-    });
+        const collection = client.db(dbName).collection(collName);
+        collection.updateOne(filterDoc, updateDoc, { upsert: true }).then(
+          result => {
+            if (result.upsertedId) {
+              console.log(
+                "You successfully enqued a staging job to docs autobuilder. This is the record id: ",
+                result.upsertedId
+              );
+              resolve(true)
+            }
+            console.log("Already existed ", newJob);
+            reject("Already existed")
+          },
+          error => {
+            console.log(
+              "There was an error enqueing a staging job to docs autobuilder. Here is the error: ",
+              error
+            );
+            reject(error);
+          }
+        );
+      });
+  });
+    
+    
+    
+    // client.connect(err => {
+    //   if (err) {
+    //     console.log("error connecting to Mongo");
+    //     return err;
+    //   }
+    //   const collection = client.db(dbName).collection(collName);
+    //   collection.updateOne(filterDoc, updateDoc, { upsert: true }).then(
+    //     result => {
+    //       if (result.upsertedId) {
+    //         console.log(
+    //           "You successfully enqued a staging job to docs autobuilder. This is the record id: ",
+    //           result.upsertedId
+    //         );
+    //         return true;
+    //       }
+    //       console.log("Already existed ", newJob);
+    //       return "Already Existed";
+    //     },
+    //     error => {
+    //       console.log(
+    //         "There was an error enqueing a staging job to docs autobuilder. Here is the error: ",
+    //         error
+    //       );
+    //       return error;
+    //     }
+    //   );
+    // });
+    client.close();
   },
 
   createPayload(

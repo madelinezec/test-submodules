@@ -60,15 +60,20 @@ async function main() {
       buildSize,
       newHead
     );
-    const success = await StagingUtils.insertJob(
-      payLoad,
-      `Github Push: ${userName}/repoName`,
-      userName,
-      userEmail
-    );
-    if (success !== true) {
-      console.log("Failure! ", success);
+    try {
+      const success = await StagingUtils.insertJob(
+        payLoad,
+        `Github Push: ${userName}/repoName`,
+        userName,
+        userEmail
+      );
+    } catch (error) {
+      console.error("Failure! Could not enqueue job to staging")
     }
+ 
+    // if (success !== true) {
+    //   console.log("Failure! ", success);
+    // }
   }
 
   if (patchFlag === "local") {
@@ -83,16 +88,20 @@ async function main() {
       newHead
     );
 
-    const success = await StagingUtils.insertJob(
-      payLoad,
-      `Github Push: ${userName}/repoName`,
-      userName,
-      userEmail
-    );
-
-    if (success !== true) {
-      console.log("Failure! ", success);
+    try {
+      const success = await StagingUtils.insertJob(
+        payLoad,
+        `Github Push: ${userName}/repoName`,
+        userName,
+        userEmail
+      );
+    } catch (error) {
+      console.error("Failure! Could not enqueue job to staging")
     }
+
+    // if (success !== true) {
+    //   console.log("Failure! ", success);
+    // }
   }
 
   await StagingUtils.deletePatchFile();
