@@ -67,7 +67,7 @@ async function main() {
       userEmail
     );
     if (success !== true) {
-      console.log("Failure!");
+      console.log("Failure! ", success);
     }
   }
 
@@ -91,7 +91,7 @@ async function main() {
     );
 
     if (success !== true) {
-      console.log("Failure!");
+      console.log("Failure! ", success);
     }
   }
 
