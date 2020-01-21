@@ -31,7 +31,7 @@ module.exports = {
     const filterDoc = { payload: payloadObj, status: ["inProgress", "inQueue"] }
     const updateDoc = { $setOnInsert: newJob };
 
-    const filterDoc = {$or: [ { payload: payloadObj, status: "inQueue" }, { payload: payloadObj, status: "inProgress" }]};
+    //const filterDoc = {$or: [ { payload: payloadObj, status: "inQueue" }, { payload: payloadObj, status: "inProgress" }]};
     const uri = `mongodb+srv://${username}:${secret}@cluster0-ylwlz.mongodb.net/test?retryWrites=true&w=majority`;
     const client = new MongoClient(uri, { useUnifiedTopology: true, useNewUrlParser: true });
     client.connect(err => {
