@@ -243,7 +243,7 @@ module.exports = {
   },
 
   async getGitPatchFromLocal(upstreamBranchName) {
-
+    console.log(upstreamBranchName);
     return new Promise((resolve, reject) => {
       exec(
         `git diff ${upstreamBranchName} --ignore-submodules > myPatch.patch`,
