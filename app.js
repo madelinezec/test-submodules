@@ -30,8 +30,8 @@ async function main() {
   const userEmail = await StagingUtils.getGitEmail();
   const url = await StagingUtils.getRepoInfo();
   const repoName = StagingUtils.getRepoName(url);
-  const branchName = StagingUtils.getBranchName();
-  branchName.catch(console.error);
+  const branchName = await StagingUtils.getBranchName();
+  
   const newHead = "newHead";
 
   const upstreamConfig = await StagingUtils.checkUpstreamConfiguration(branchName);
