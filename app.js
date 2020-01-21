@@ -30,7 +30,7 @@ async function main() {
   const userEmail = await StagingUtils.getGitEmail();
   const url = await StagingUtils.getRepoInfo();
   const repoName = StagingUtils.getRepoName(url);
-  const branchName = await StagingUtils.getBranchName();
+  const branchName = StagingUtils.getBranchName();
   branchName.catch(console.error);
   const newHead = "newHead";
 
