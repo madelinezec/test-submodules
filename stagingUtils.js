@@ -106,6 +106,7 @@ module.exports = {
     return new Promise((resolve, reject) => {
       exec("git rev-parse --abbrev-ref HEAD")
       .then(stdout => {
+        console.log(stdout)
         resolve(stdout.replace("\n", ""))
         }
         )
