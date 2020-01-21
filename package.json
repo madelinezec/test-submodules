@@ -1,20 +1,28 @@
 {
-  "main": "index.js",
+  "name": "test-submodules",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
   "dependencies": {
-    "mongodb": "^3.4.1",
-    "shelljs": "^0.8.3"
+    "child_process": "^1.0.2",
+    "dotenv": "^8.2.0",
+    "fs": "0.0.1-security",
+    "mongodb": "^3.5.2",
+    "shelljs": "^0.8.3",
+    "util": "^0.12.1"
   },
-  "devDependencies": {
-    "chokidar-cli": "^1.2.0",
-    "nodemon": "^1.12.5",
-    "standard": "^10.0.3",
-    "tape": "^4.8.0"
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/madelinezec/test-submodules.git"
   },
   "author": "",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/madelinezec/test-submodules/issues"
   },
-  "homepage": "https://github.com/madelinezec/test-submodules#readme",
-  "description": ""
+  "homepage": "https://github.com/madelinezec/test-submodules#readme"
 }
