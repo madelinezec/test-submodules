@@ -28,7 +28,7 @@ module.exports = {
 
     // we are looking for jobs in the queue with the same payload
     // that have not yet started (startTime == null)
-    const filterDoc = { payload: payloadObj, status: "inQueue" || "inProgress" };
+    const filterDoc = { payload: payloadObj, status: "inQueue"};
     const updateDoc = { $setOnInsert: newJob };
 
     //const filterDoc = {$or: [ { payload: payloadObj, status: "inQueue" }, { payload: payloadObj, status: "inProgress" }]};
