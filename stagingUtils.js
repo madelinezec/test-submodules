@@ -211,7 +211,6 @@ module.exports = {
       const { stdout, stderr } = await exec(
         `git rev-parse --abbrev-ref --symbolic-full-name ${branchName}@{upstream}`
       );
-
       return stdout;
     } catch (error) {
       if (error.code === 128) {
@@ -220,9 +219,9 @@ module.exports = {
           \n\n \
           git branch -u <upstream-branch-name>\
           \n\n";
-        throw errormsg;
+        console.error(errormsg);
       } else {
-        throw error;
+        console.error(error);
       }
     }
   },
@@ -239,7 +238,7 @@ module.exports = {
         return false;
         //we dont want to cancel the program
       } else {
-        throw error;
+        console.error(error);
       }
     }
   },

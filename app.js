@@ -31,6 +31,7 @@ async function main() {
   const url = await StagingUtils.getRepoInfo();
   const repoName = StagingUtils.getRepoName(url);
   const branchName = await StagingUtils.getBranchName();
+  branchName.catch(console.error);
   const newHead = "newHead";
 
   const upstreamConfig = await StagingUtils.checkUpstreamConfiguration(branchName);
