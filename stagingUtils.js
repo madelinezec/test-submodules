@@ -230,14 +230,13 @@ module.exports = {
     return new Promise((resolve, reject) => {
       exec(`git diff ${upstreamBranchName} --ignore-submodules > myPatch.patch`)
         .then(() => {
-          fs.readFile('myPatch.patch', 'utf8')
-            .then((data) => {
-              console.log(data);
+          fs.readFile('myPatch.patch', 'utf8', (err, data) => {
+              if (err) {
+                console.log("error reading patch file: ", err);
+                reject(err);
+              }
+              console.log(data)
               resolve(data);
-            })
-            .catch((error) => {
-              console.log('error reading patch file: ', error);
-              reject(error);
             });
         })
         .catch((error) => {
