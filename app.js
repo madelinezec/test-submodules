@@ -15,11 +15,6 @@ async function main() {
 
   let invalidFlag = false;
 
-  if (buildSize !== undefined && buildSize !== "repo") {
-    console.log('Invalid build size. Use "world" or "repo"');
-    invalidFlag = true;
-  }
-
   if (patchFlag !== "local" && patchFlag !== "commit") {
     console.log(
       'Invalid patch flag. Use "commit" to stage a build from the committed work you have locally or use "local" to stage a build from the uncommitted work you have locally'
@@ -84,7 +79,7 @@ async function main() {
       buildSize,
       newHead
     );
-    console.log(payLoad);
+
     try {
       StagingUtils.insertJob(
         payLoad,
