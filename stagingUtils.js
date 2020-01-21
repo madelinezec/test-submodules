@@ -151,8 +151,8 @@ module.exports = {
   async getGitUser() {
     return new Promise((resolve, reject) => {
       exec('git config --global user.name')
-        .then((stdout) => {
-          resolve(stdout.replace('\n', ''));
+        .then((result) => {
+          resolve(result.stdout.replace('\n', ''));
         })
         .catch((error) => {
           console.error(`exec error: ${error}`);
