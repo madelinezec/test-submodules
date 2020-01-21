@@ -257,6 +257,7 @@ module.exports = {
                 console.log("error reading patch file: ", err);
                 reject(err);
               }
+              console.log(data)
               resolve(data);
             });
           }
