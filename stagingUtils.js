@@ -183,6 +183,7 @@ module.exports = {
   },
 
   getUpstreamName(upstream) {
+    console.log("yoooo ", upstream)
     const upstreamInd = upstream.indexOf('origin/');
     if (upstreamInd === -1) {
       return upstream;
