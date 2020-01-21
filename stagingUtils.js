@@ -194,10 +194,10 @@ module.exports = {
   async checkUpstreamConfiguration(branchName) {
 
     try {
-      const stdout = await exec(
+      const result = await exec(
         `git rev-parse --abbrev-ref --symbolic-full-name ${branchName}@{upstream}`
       );
-      return stdout;
+      return result.stdout;
     } catch (error) {
       if (error.code === 128) {
         const errormsg = "You have not set an upstream for your local branch. Please do so with this command: \
