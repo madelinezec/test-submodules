@@ -10,10 +10,6 @@
     "standard": "^10.0.3",
     "tape": "^4.8.0"
   },
-  "scripts": {
-    "start": "node index.js",
-    "test": "node 'test/index.js'"
-  },
   "author": "",
   "license": "ISC",
   "bugs": {
