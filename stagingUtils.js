@@ -90,16 +90,36 @@ module.exports = {
     return payload;
   },
 
+  // async getBranchName() {
+  //   return new Promise((resolve, reject) => {
+  //     exec("git rev-parse --abbrev-ref HEAD", (error, stdout) => {
+  //       if (error !== null) {
+  //         console.error(`exec error: ${error}`);
+  //         reject(error);
+  //       }
+  //       resolve(stdout.replace("\n", ""));
+  //     });
+  //   });
+  // },
+
   async getBranchName() {
     return new Promise((resolve, reject) => {
-      exec("git rev-parse --abbrev-ref HEAD", (error, stdout) => {
-        if (error !== null) {
-          console.error(`exec error: ${error}`);
-          reject(error);
+      exec("git rev-parse --abbrev-ref HEAD")
+      .then(stdout => {
+        resolve(stdout.replace("\n", ""))
         }
-        resolve(stdout.replace("\n", ""));
-      });
-    });
+        )
+        .catch(console.error)
+      
+    //   , (error, stdout) => {
+    //     if (error !== null) {
+    //       console.error(`exec error: ${error}`);
+    //       reject(error);
+    //     }
+    //     resolve(stdout.replace("\n", ""));
+    //   });
+    // });
+    })
   },
 
   // extract repo name from url
