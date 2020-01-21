@@ -35,6 +35,11 @@ async function main() {
 
   const upstreamConfig = await StagingUtils.checkUpstreamConfiguration(branchName);
   const upstreamName = StagingUtils.getUpstreamName(upstreamConfig).trim(); //remove \n
+  upstreamName.then(function () {
+    console.log("Promise Resolved");
+}).catch(function () {
+    console.log("Promise Rejected");
+});
   const doesRemoteHaveLocalBranch = await StagingUtils.doesRemoteHaveLocalBranch(branchName);
   const branchNameForPayload = doesRemoteHaveLocalBranch ? branchName : upstreamName;
 
