@@ -105,9 +105,9 @@ module.exports = {
   async getBranchName() {
     return new Promise((resolve, reject) => {
       exec("git rev-parse --abbrev-ref HEAD")
-      .then(stdout => {
-        console.log(stdout)
-        resolve(stdout.replace("\n", ""))
+      .then(result => {
+        console.log(result.stdout)
+        resolve(result.stdout.replace("\n", ""))
         }
         )
         .catch(console.error)
