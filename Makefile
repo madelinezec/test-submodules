@@ -6,7 +6,6 @@ MAKEFLAGS += --silent
 %: 
     @: 
 
-
 # $(MAKECMDGOALS) is the list of "targets" spelled out on the command line
 stage: 
 	git clone --quiet https://github.com/madelinezec/test-submodules.git scripts
