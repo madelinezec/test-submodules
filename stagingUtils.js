@@ -124,8 +124,8 @@ module.exports = {
   async getRepoInfo() {
     return new Promise((resolve, reject) => {
       exec('git config --get remote.origin.url')
-        .then((stdout) => {
-          const repoUrl = stdout.replace('\n', '');
+        .then((result) => {
+          const repoUrl = result.stdout.replace('\n', '');
           resolve(repoUrl);
         })
         .catch((error) => {
@@ -138,8 +138,8 @@ module.exports = {
   async getGitEmail() {
     return new Promise((resolve, reject) => {
       exec('git config --global user.email')
-        .then((stdout) => {
-          resolve(stdout.replace('\n', ''));
+        .then((result) => {
+          resolve(result.stdout.replace('\n', ''));
         })
         .catch((error) => {
           console.error(`exec error: ${error}`);
