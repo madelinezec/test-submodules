@@ -28,7 +28,8 @@ module.exports = {
 
     // we are looking for jobs in the queue with the same payload
     // that have not yet started (startTime == null)
-    const filterDoc = { payload: payloadObj, startTime: null }
+    //const filterDoc = { payload: payloadObj, startTime: null }
+    const filterDoc = { payload: payloadObj, status: {$in: ["inProgress", "inQueue"] } }
     const updateDoc = { $setOnInsert: newJob };
 
     const uri = `mongodb+srv://${username}:${secret}@cluster0-ylwlz.mongodb.net/test?retryWrites=true&w=majority`;
