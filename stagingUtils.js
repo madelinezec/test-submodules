@@ -28,10 +28,9 @@ module.exports = {
 
     // we are looking for jobs in the queue with the same payload
     // that have not yet started (startTime == null)
-    const filterDoc = { payload: payloadObj, status: ["inProgress", "inQueue"] }
+    const filterDoc = { payload: payloadObj, startTime: null }
     const updateDoc = { $setOnInsert: newJob };
 
-    //const filterDoc = {$or: [ { payload: payloadObj, status: "inQueue" }, { payload: payloadObj, status: "inProgress" }]};
     const uri = `mongodb+srv://${username}:${secret}@cluster0-ylwlz.mongodb.net/test?retryWrites=true&w=majority`;
     const client = new MongoClient(uri, { useUnifiedTopology: true, useNewUrlParser: true });
     client.connect(err => {
@@ -175,7 +174,7 @@ module.exports = {
       const commitarray = cleanedup.split(/\r\n|\r|\n/);
       commitarray.pop(); // remove the last, dummy element that results from splitting on newline
       if (commitarray.length === 0) {
-        console.log(
+        console.error(
           "You have tried to create a staging job from local commits but you have no committed work. Please make commits and then try again"
         );
         process.exit();
