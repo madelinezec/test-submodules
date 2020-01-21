@@ -1,0 +1,24 @@
+{
+  "main": "index.js",
+  "dependencies": {
+    "mongodb": "^3.4.1",
+    "shelljs": "^0.8.3"
+  },
+  "devDependencies": {
+    "chokidar-cli": "^1.2.0",
+    "nodemon": "^1.12.5",
+    "standard": "^10.0.3",
+    "tape": "^4.8.0"
+  },
+  "scripts": {
+    "start": "node index.js",
+    "test": "node 'test/index.js'"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/madelinezec/test-submodules/issues"
+  },
+  "homepage": "https://github.com/madelinezec/test-submodules#readme",
+  "description": ""
+}
