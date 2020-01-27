@@ -171,6 +171,40 @@ module.exports = {
   },
 
   async getGitCommits() {
+
+
+    return new Promise((resolve, reject) => {
+      exec("git cherry")
+        .then((result) => {
+          console.log(result)
+          const cleanedup = result.stdout.replace(/\+ /g, "");
+          commitarray = cleanedup.split(/\r\n|\r|\n/);
+          commitarray.pop(); // remove the last, dummy element that results from splitting on newline
+          if (commitarray.length === 0) {
+            const err = new Error(
+              "You have tried to create a staging job from local commits but you have no committed work. Please make commits and then try again"
+            );
+            console.error(err);
+            reject(err);
+          }
+          if (commitarray.length === 1) {
+            const firstCommit = commitarray[0];
+            const lastCommit = null;
+            return { firstCommit, lastCommit };
+          }
+          const firstCommit = commitarray[0];
+          const lastCommit = commitarray[commitarray.length - 1];
+          return { firstCommit, lastCommit };
+        }
+        )
+        .catch(error => {
+          console.error("error generating patch: ", error);
+          reject(error);
+        });
+    });
+
+
+
     let commitarray;
 
     try {
@@ -183,7 +217,7 @@ module.exports = {
           "You have tried to create a staging job from local commits but you have no committed work. Please make commits and then try again"
         );
         console.error(err)
-        return null, null;
+        return null;
       }
       if (commitarray.length === 1) {
         const firstCommit = commitarray[0];
