@@ -202,6 +202,7 @@ module.exports = {
 
   async getGitCommits() {
     const stdout = await exec("git cherry");
+    console.log("this is stdout!! " , stdout);
     const cleanedup = stdout.replace(/\+ /g, "");
     const commitarray = cleanedup.split(/\r\n|\r|\n/);
     commitarray.pop(); // remove the last, dummy element that results from splitting on newline
