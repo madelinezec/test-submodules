@@ -176,14 +176,12 @@ module.exports = {
     return new Promise((resolve, reject) => {
       exec("git cherry")
         .then((result) => {
-          console.log(result)
           const cleanedup = result.stdout.replace(/\+ /g, "");
           const commitarray = cleanedup.split(/\r\n|\r|\n/);
           commitarray.pop(); // remove the last, dummy element that results from splitting on newline
           if (commitarray.length === 0) {
-            const err = new Error(
-              "You have tried to create a staging job from local commits but you have no committed work. Please make commits and then try again"
-            );
+            const err = 
+              "You have tried to create a staging job from local commits but you have no committed work. Please make commits and then try again";
             
             reject(err);
           }
