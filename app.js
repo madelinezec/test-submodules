@@ -95,7 +95,10 @@ async function main() {
     try {
       let { firstCommit, lastCommit } = await StagingUtils.getGitCommits();
       console.log(firstCommit);
-      return;
+      if(firstCommit === null){
+        return
+      }
+      
     } catch (error) {
       console.log("hoorah we caught without throwing an error!!!");
       return;
