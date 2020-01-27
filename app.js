@@ -8,7 +8,9 @@ async function main() {
   let upstreamConfig;
   let upstreamName;
   let doesRemoteHaveLocalBranch;
-
+  let branchName;
+  let repoName;
+  const newHead = "newHead";
   try {
     StagingUtils.validateConfiguration();
   } catch (error) {
@@ -54,19 +56,19 @@ async function main() {
   }
   
   try {
-    const repoName = StagingUtils.getRepoName(url);
-  } catch (error) {
-    return
-  }
-  
-  try {
-    const branchName = await StagingUtils.getBranchName();
+    repoName = StagingUtils.getRepoName(url);
   } catch (error) {
     return
   }
 
   try {
-    const newHead = "newHead";
+    branchName = await StagingUtils.getBranchName();
+  } catch (error) {
+    return
+  }
+
+  try {
+    
 
     upstreamConfig = await StagingUtils.checkUpstreamConfiguration(branchName);
   } catch (error) {
