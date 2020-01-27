@@ -51,25 +51,20 @@ module.exports = {
 
       if (result.upsertedId) {
         console.log(
-          `You successfully enqued a staging job to docs autobuilder. This is the record id: ${result.stdout.upsertedId}`
+          `You successfully enqued a staging job to docs autobuilder. This is the record id: ${result.upsertedId}`
         );
-        //client.close();
-        resultOfQuery = true;
+        client.close();
         return true
       }
-      //client.close();
+      client.close();
       console.log("This job already exists ");
-      resultOfQuery = "Already Existed";
       return "Already Existed"
     } catch (error) {
       console.error(`There was an error enqueing a staging job to docs autobuilder. Here is the error: ${error}`);
-     // client.close();
-      resultOfQuery = error
-       return error;
+      client.close();
+      return error;
     }
 
-    client.close()
-    // return resultOfQuery
   },
 
   createPayload(
