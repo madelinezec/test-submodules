@@ -93,11 +93,8 @@ async function main() {
   if (patchFlag === "commit") {
 
     try {
-      let { firstCommit, lastCommit } = await StagingUtils.getGitCommits();
-      if( firstCommit === Error){
-        console.log("this is an error!!!")
-        return
-      }
+      const { firstCommit, lastCommit } = await StagingUtils.getGitCommits();
+
       console.log(firstCommit);
     } catch (error) {
       console.log("hoorah we caught without throwing an error!!!");
