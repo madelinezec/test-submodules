@@ -39,9 +39,15 @@ module.exports = {
     const collection = client.db(dbName).collection(collName);
     // execute find query
     // const items = await db.collection('items').find({}).toArray();
-    const result = await collection.updateOne(filterDoc, updateDoc, { upsert: true });
+    try {
+      const result = await collection.updateOne(filterDoc, updateDoc, { upsert: true });
+      console.log(result);
+    } catch (error) {
+      console.log("we got an error!!!! ", error)
+    }
     
-    console.log(result);
+    
+   
     // close connection
     client.close();
     
