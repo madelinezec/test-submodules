@@ -95,9 +95,10 @@ async function main() {
     try {
       let { firstCommit, lastCommit } = await StagingUtils.getGitCommits();
       console.log(firstCommit);
-
+      return;
     } catch (error) {
       console.log("hoorah we caught without throwing an error!!!");
+      return;
     }
     
     const patch = await StagingUtils.getGitPatchFromCommits(
