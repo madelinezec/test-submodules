@@ -11,6 +11,8 @@ async function main() {
   let doesRemoteHaveLocalBranch;
   let branchName;
   let repoName;
+  let userName;
+  let userEmail;
   const newHead = "newHead";
   
   try {
@@ -40,13 +42,13 @@ async function main() {
   }
 
   try {
-    const userName = await StagingUtils.getGitUser();
+    userName = await StagingUtils.getGitUser();
   } catch (error) {
     return
   }
   
   try {
-    const userEmail = await StagingUtils.getGitEmail();
+    userEmail = await StagingUtils.getGitEmail();
   } catch (error) {
     return
   }
