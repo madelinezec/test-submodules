@@ -173,7 +173,7 @@ module.exports = {
 
   async getGitCommits() {
 
-
+    console.log("inside here getgitcommits");
     return new Promise((resolve, reject) => {
       exec("git cherry")
         .then((result) => {
@@ -189,11 +189,12 @@ module.exports = {
           if (commitarray.length === 1) {
             const firstCommit = commitarray[0];
             const lastCommit = null;
-            return { firstCommit, lastCommit };
+            console.log("hiiiiii")
+            resolve([firstCommit, lastCommit]);
           }
           const firstCommit = commitarray[0];
           const lastCommit = commitarray[commitarray.length - 1];
-          return { firstCommit, lastCommit };
+          resolve([firstCommit, lastCommit]);
         }
         )
         .catch(error => {
