@@ -54,7 +54,7 @@ module.exports = {
 
       if (result.upsertedId) {
         console.log(
-          `You successfully enqued a staging job to docs autobuilder. This is the record id: ${result.upsertedId}`
+          `You successfully enqued a staging job to docs autobuilder. This is the record id: ${result.stdout.upsertedId}`
         );
         client.close();
         return true;
@@ -68,33 +68,6 @@ module.exports = {
       return error;
     }
 
-    // close connection
-    
-
-    // client.connect((err) => {
-    //   if (err) {
-    //     console.error('error connecting to Mongo');
-    //     return err;
-    //   }
-    //   const collection = client.db(dbName).collection(collName);
-
-    //   collection.updateOne(filterDoc, updateDoc, { upsert: true }).then(
-    //     (result) => {
-    //       if (result.upsertedId) {
-    //         console.log(`You successfully enqued a staging job to docs autobuilder. This is the record id: ${result.upsertedId}`);
-    //         return true;
-    //       }
-    //       console.log('This job already exists ');
-    //       return 'Already Existed';
-    //     },
-    //     (error) => {
-    //       console.error(`There was an error enqueing a staging job to docs autobuilder. Here is the error: ${error}`);
-    //       return error;
-    //     },
-    //   );
-    //   console.log("about to close!!!!");
-    //   client.close();
-    // });
   },
 
   createPayload(
