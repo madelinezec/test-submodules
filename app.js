@@ -3,8 +3,17 @@ const StagingUtils = require("./stagingUtils");
 async function main() {
   const patchFlag = process.argv[2];
   const buildSize = process.argv[3];
+  
+  let url;
+  let upstreamConfig;
+  let upstreamName;
+  let doesRemoteHaveLocalBranch;
 
-  StagingUtils.validateConfiguration();
+  try {
+    StagingUtils.validateConfiguration();
+  } catch (error) {
+    return
+  }
 
   if (patchFlag === undefined) {
     console.log(
@@ -26,18 +35,56 @@ async function main() {
     return;
   }
 
-  const userName = await StagingUtils.getGitUser();
-  const userEmail = await StagingUtils.getGitEmail();
-  const url = await StagingUtils.getRepoInfo();
-  const repoName = StagingUtils.getRepoName(url);
-  const branchName = await StagingUtils.getBranchName();
+  try {
+    const userName = await StagingUtils.getGitUser();
+  } catch (error) {
+    return
+  }
   
-  const newHead = "newHead";
+  try {
+    const userEmail = await StagingUtils.getGitEmail();
+  } catch (error) {
+    return
+  }
+  
+  try {
+    url = await StagingUtils.getRepoInfo();
+  } catch (error) {
+    return
+  }
+  
+  try {
+    const repoName = StagingUtils.getRepoName(url);
+  } catch (error) {
+    return
+  }
+  
+  try {
+    const branchName = await StagingUtils.getBranchName();
+  } catch (error) {
+    return
+  }
 
-  const upstreamConfig = await StagingUtils.checkUpstreamConfiguration(branchName);
-  const upstreamName = StagingUtils.getUpstreamName(upstreamConfig).trim(); //remove \n
+  try {
+    const newHead = "newHead";
+
+    upstreamConfig = await StagingUtils.checkUpstreamConfiguration(branchName);
+  } catch (error) {
+    return
+  }
   
-  const doesRemoteHaveLocalBranch = await StagingUtils.doesRemoteHaveLocalBranch(branchName);
+  try {
+    upstreamName = StagingUtils.getUpstreamName(upstreamConfig).trim(); //remove \n
+  } catch (error) {
+    return
+  }
+  
+  try {
+    doesRemoteHaveLocalBranch = await StagingUtils.doesRemoteHaveLocalBranch(branchName);
+  } catch (error) {
+    return;
+  }
+  
   const branchNameForPayload = doesRemoteHaveLocalBranch ? branchName : upstreamName;
 
   // toggle btwn create patch from commits or what you have saved locally

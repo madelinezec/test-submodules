@@ -177,10 +177,10 @@ module.exports = {
       const commitarray = cleanedup.split(/\r\n|\r|\n/);
       commitarray.pop(); // remove the last, dummy element that results from splitting on newline
       if (commitarray.length === 0) {
-        console.error(
+        const err = new Error(
           "You have tried to create a staging job from local commits but you have no committed work. Please make commits and then try again"
         );
-        process.exit();
+        throw err
       }
       if (commitarray.length === 1) {
         const firstCommit = commitarray[0];
@@ -217,11 +217,13 @@ module.exports = {
           \n\n \
           git branch -u <upstream-branch-name>\
           \n\n";
-        console.error(errormsg);
-        process.exit();
+        
+        throw errormsg
+        //return something or throw exception and catch it - inside of app.js catch, return instead of process.exit()
+        
       }
       console.error(error);
-      process.exit();
+      throw error
     }
   },
 
@@ -312,10 +314,10 @@ module.exports = {
       missingConfigs.push("SECRET");
     }
     if (missingConfigs.length !== 0) {
-      console.error(
+      const err = new Error(
         `The ~/.config/.snootyenv file is found but does not contain the following required fields: ${missingConfigs.toString()}`
       );
-      process.exit();
+      throw err;
     }
   }
 };
