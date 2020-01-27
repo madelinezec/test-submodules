@@ -68,8 +68,6 @@ async function main() {
   }
 
   try {
-    
-
     upstreamConfig = await StagingUtils.checkUpstreamConfiguration(branchName);
   } catch (error) {
     return
@@ -94,6 +92,7 @@ async function main() {
     let [ firstCommit, lastCommit ] = [];
     try {
       [firstCommit, lastCommit ] = await StagingUtils.getGitCommits();
+      console.log("there was not an error ", firstCommit, lastCommit)
     } catch (error) {
       console.error(error);
       return;
