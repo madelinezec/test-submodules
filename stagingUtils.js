@@ -1,11 +1,11 @@
-const { promisify } = require('util');
-const exec = promisify(require('child_process').exec);
-const fs = require('fs');
-const { MongoClient } = require('mongodb');
+const { promisify } = require("util");
+const exec = promisify(require("child_process").exec);
+const fs = require("fs");
+const { MongoClient } = require("mongodb");
 
 module.exports = {
   async insertJob(payloadObj, jobTitle, jobUserName, jobUserEmail) {
-    console.log("hello???")
+    console.log("hello???");
     const dbName = process.env.DB_NAME;
     const collName = process.env.COL_NAME;
     const username = process.env.USERNAME;
@@ -16,7 +16,7 @@ module.exports = {
       title: jobTitle,
       user: jobUserName,
       email: jobUserEmail,
-      status: 'inQueue',
+      status: "inQueue",
       createdTime: new Date(),
       startTime: null,
       endTime: null,
@@ -25,39 +25,48 @@ module.exports = {
       failures: [],
       result: null,
       payload: payloadObj,
-      logs: {},
+      logs: {}
     };
 
-    const filterDoc = { payload: payloadObj, status: { $in: ['inProgress', 'inQueue'] } };
+    const filterDoc = {
+      payload: payloadObj,
+      status: { $in: ["inProgress", "inQueue"] }
+    };
     const updateDoc = { $setOnInsert: newJob };
 
     const uri = `mongodb+srv://${username}:${secret}@cluster0-ylwlz.mongodb.net/test?retryWrites=true&w=majority`;
     // connect to your cluster
     //const client = new MongoClient(uri, { useUnifiedTopology: true, useNewUrlParser: true });
-    
-    const client = await MongoClient.connect(uri, { 
-      useNewUrlParser: true, 
-      useUnifiedTopology: true,
-  });
-    // client.connect();
+
+    const client = await MongoClient.connect(uri, {
+      useNewUrlParser: true,
+      useUnifiedTopology: true
+    });
+
     // specify the DB's name
     const collection = client.db(dbName).collection(collName);
-    // execute find query
-    // const items = await db.collection('items').find({}).toArray();
+    
+    // execute update query
     try {
-      const result = await collection.updateOne(filterDoc, updateDoc, { upsert: true });
+      const result = await collection.updateOne(filterDoc, updateDoc, {
+        upsert: true
+      });
       console.log(result);
+      if (result.upsertedId) {
+        console.log(
+          `You successfully enqued a staging job to docs autobuilder. This is the record id: ${result.upsertedId}`
+        );
+        return true;
+      }
+      console.log("This job already exists ");
+      return "Already Existed";
     } catch (error) {
-      console.log("we got an error!!!! ", error)
+      console.log("we got an error!!!! ", error);
     }
-    
-    
-   
+
     // close connection
     client.close();
-    
-    
-    
+
     // client.connect((err) => {
     //   if (err) {
     //     console.error('error connecting to Mongo');
@@ -94,9 +103,9 @@ module.exports = {
     lastCommit
   ) {
     const payload = {
-      jobType: 'githubPush',
-      source: 'github',
-      action: 'push',
+      jobType: "githubPush",
+      source: "github",
+      action: "push",
       repoName: repoNameArg,
       branchName: upstreamBranchName,
       isFork: true,
@@ -105,17 +114,17 @@ module.exports = {
       repoOwner: repoOwnerArg,
       url: urlArg,
       newHead: lastCommit,
-      patch: patchArg,
+      patch: patchArg
     };
 
     return payload;
   },
 
   async getBranchName() {
-    return new Promise((resolve) => {
-      exec('git rev-parse --abbrev-ref HEAD')
-        .then((result) => {
-          resolve(result.stdout.replace('\n', ''));
+    return new Promise(resolve => {
+      exec("git rev-parse --abbrev-ref HEAD")
+        .then(result => {
+          resolve(result.stdout.replace("\n", ""));
         })
         .catch(console.error);
     });
@@ -124,23 +133,23 @@ module.exports = {
   // extract repo name from url
   getRepoName(url) {
     if (url === undefined) {
-      console.error('getRepoName error: repository url is undefined');
+      console.error("getRepoName error: repository url is undefined");
     }
-    let repoName = url.split('/');
+    let repoName = url.split("/");
     repoName = repoName[repoName.length - 1];
-    repoName = repoName.replace('.git', '');
-    repoName = repoName.replace('\n', '');
+    repoName = repoName.replace(".git", "");
+    repoName = repoName.replace("\n", "");
     return repoName;
   },
 
   // delete patch file
   async deletePatchFile() {
     return new Promise((resolve, reject) => {
-      exec('rm myPatch.patch')
+      exec("rm myPatch.patch")
         .then(() => {
-          resolve('successfully removed patch file');
+          resolve("successfully removed patch file");
         })
-        .catch((error) => {
+        .catch(error => {
           console.error(`exec error deleting patch file: ${error}`);
           reject(error);
         });
@@ -149,12 +158,12 @@ module.exports = {
 
   async getRepoInfo() {
     return new Promise((resolve, reject) => {
-      exec('git config --get remote.origin.url')
-        .then((result) => {
-          const repoUrl = result.stdout.replace('\n', '');
+      exec("git config --get remote.origin.url")
+        .then(result => {
+          const repoUrl = result.stdout.replace("\n", "");
           resolve(repoUrl);
         })
-        .catch((error) => {
+        .catch(error => {
           console.error(`exec error: ${error}`);
           reject(error);
         });
@@ -163,11 +172,11 @@ module.exports = {
 
   async getGitEmail() {
     return new Promise((resolve, reject) => {
-      exec('git config --global user.email')
-        .then((result) => {
-          resolve(result.stdout.replace('\n', ''));
+      exec("git config --global user.email")
+        .then(result => {
+          resolve(result.stdout.replace("\n", ""));
         })
-        .catch((error) => {
+        .catch(error => {
           console.error(`exec error: ${error}`);
           reject(error);
         });
@@ -176,11 +185,11 @@ module.exports = {
 
   async getGitUser() {
     return new Promise((resolve, reject) => {
-      exec('git config --global user.name')
-        .then((result) => {
-          resolve(result.stdout.replace('\n', ''));
+      exec("git config --global user.name")
+        .then(result => {
+          resolve(result.stdout.replace("\n", ""));
         })
-        .catch((error) => {
+        .catch(error => {
           console.error(`exec error: ${error}`);
           reject(error);
         });
@@ -188,13 +197,13 @@ module.exports = {
   },
 
   async getGitCommits() {
-    const stdout = await exec('git cherry');
-    const cleanedup = stdout.replace(/\+ /g, '');
+    const stdout = await exec("git cherry");
+    const cleanedup = stdout.replace(/\+ /g, "");
     const commitarray = cleanedup.split(/\r\n|\r|\n/);
     commitarray.pop(); // remove the last, dummy element that results from splitting on newline
     if (commitarray.length === 0) {
       console.error(
-        'You have tried to create a staging job from local commits but you have no committed work. Please make commits and then try again'
+        "You have tried to create a staging job from local commits but you have no committed work. Please make commits and then try again"
       );
       process.exit();
     }
@@ -209,16 +218,15 @@ module.exports = {
   },
 
   getUpstreamName(upstream) {
-    console.log("yoooo ", upstream)
-    const upstreamInd = upstream.indexOf('origin/');
+    console.log("yoooo ", upstream);
+    const upstreamInd = upstream.indexOf("origin/");
     if (upstreamInd === -1) {
       return upstream;
     }
-    return 'master';
+    return "master";
   },
 
   async checkUpstreamConfiguration(branchName) {
-
     try {
       const result = await exec(
         `git rev-parse --abbrev-ref --symbolic-full-name ${branchName}@{upstream}`
@@ -226,7 +234,8 @@ module.exports = {
       return result.stdout;
     } catch (error) {
       if (error.code === 128) {
-        const errormsg = "You have not set an upstream for your local branch. Please do so with this command: \
+        const errormsg =
+          "You have not set an upstream for your local branch. Please do so with this command: \
           \n\n \
           git branch -u <upstream-branch-name>\
           \n\n";
@@ -256,16 +265,16 @@ module.exports = {
     return new Promise((resolve, reject) => {
       exec(`git diff ${upstreamBranchName} --ignore-submodules > myPatch.patch`)
         .then(() => {
-          fs.readFile('myPatch.patch', 'utf8', (err, data) => {
-              if (err) {
-                console.log("error reading patch file: ", err);
-                reject(err);
-              }
-              resolve(data);
-            });
+          fs.readFile("myPatch.patch", "utf8", (err, data) => {
+            if (err) {
+              console.log("error reading patch file: ", err);
+              reject(err);
+            }
+            resolve(data);
+          });
         })
-        .catch((error) => {
-          console.error('error generating patch: ', error);
+        .catch(error => {
+          console.error("error generating patch: ", error);
           reject(error);
         });
     });
@@ -274,10 +283,10 @@ module.exports = {
     // need to delete patch file?
     return new Promise((resolve, reject) => {
       if (lastCommit === null) {
-        const patchCommand = 'git show HEAD > myPatch.patch';
+        const patchCommand = "git show HEAD > myPatch.patch";
         exec(patchCommand)
           .then(() => {
-            fs.readFile('myPatch.patch', 'utf8', (err, data) => {
+            fs.readFile("myPatch.patch", "utf8", (err, data) => {
               if (err) {
                 console.log("error reading patch file: ", err);
                 reject(err);
@@ -285,15 +294,15 @@ module.exports = {
               resolve(data);
             });
           })
-          .catch((error) => {
-            console.error('error generating patch: ', error);
+          .catch(error => {
+            console.error("error generating patch: ", error);
             reject(error);
           });
       } else {
         const patchCommand = `git diff ${firstCommit}^...${lastCommit} > myPatch.patch`;
         exec(patchCommand)
           .then(() => {
-            fs.readFile('myPatch.patch', 'utf8', (err, data) => {
+            fs.readFile("myPatch.patch", "utf8", (err, data) => {
               if (err) {
                 console.log("error reading patch file: ", err);
                 reject(err);
@@ -301,8 +310,8 @@ module.exports = {
               resolve(data);
             });
           })
-          .catch((error) => {
-            console.error('error generating patch: ', error);
+          .catch(error => {
+            console.error("error generating patch: ", error);
             reject(error);
           });
       }
@@ -312,17 +321,17 @@ module.exports = {
   validateConfiguration() {
     const missingConfigs = [];
 
-    if (process.env.DB_NAME === undefined || process.env.DB_NAME === '') {
-      missingConfigs.push('DB_NAME');
+    if (process.env.DB_NAME === undefined || process.env.DB_NAME === "") {
+      missingConfigs.push("DB_NAME");
     }
-    if (process.env.COL_NAME === undefined || process.env.COL_NAME === '') {
-      missingConfigs.push('COL_NAME');
+    if (process.env.COL_NAME === undefined || process.env.COL_NAME === "") {
+      missingConfigs.push("COL_NAME");
     }
-    if (process.env.USERNAME === undefined || process.env.USERNAME === '') {
-      missingConfigs.push('USERNAME');
+    if (process.env.USERNAME === undefined || process.env.USERNAME === "") {
+      missingConfigs.push("USERNAME");
     }
-    if (process.env.SECRET === undefined || process.env.SECRET === '') {
-      missingConfigs.push('SECRET');
+    if (process.env.SECRET === undefined || process.env.SECRET === "") {
+      missingConfigs.push("SECRET");
     }
     if (missingConfigs.length !== 0) {
       console.error(
@@ -330,5 +339,5 @@ module.exports = {
       );
       process.exit();
     }
-  },
+  }
 };
