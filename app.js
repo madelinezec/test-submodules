@@ -93,10 +93,11 @@ async function main() {
   // toggle btwn create patch from commits or what you have saved locally
   if (patchFlag === "commit") {
     console.log("we in")
-    let [ firstCommit, lastCommit ];
+    let firstCommit; 
+    let lastCommit;
     try {
       console.log("we are inside the try")
-      [firstCommit, lastCommit ] = await StagingUtils.getGitCommits();
+      let [firstCommit, lastCommit ] = await StagingUtils.getGitCommits();
       console.log("there was not an error ", firstCommit, lastCommit)
     } catch (error) {
       console.error(error);
