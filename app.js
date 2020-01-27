@@ -35,6 +35,7 @@ async function main() {
   const newHead = "newHead";
 
   const upstreamConfig = await StagingUtils.checkUpstreamConfiguration(branchName);
+  console.log("this is upstream config: ", upstreamConfig)
   const upstreamName = StagingUtils.getUpstreamName(upstreamConfig).trim(); //remove \n
   
   const doesRemoteHaveLocalBranch = await StagingUtils.doesRemoteHaveLocalBranch(branchName);
@@ -59,6 +60,7 @@ async function main() {
     );
 
     try {
+      console.log("we are trying!!!!!")
       StagingUtils.insertJob(
         payLoad,
         `Github Push: ${userName}/repoName`,
@@ -83,6 +85,7 @@ async function main() {
     );
 
     try {
+      console.log("we are trying!!!!!");
       StagingUtils.insertJob(
         payLoad,
         `Github Push: ${userName}/repoName`,

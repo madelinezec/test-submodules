@@ -5,10 +5,12 @@ const { MongoClient } = require('mongodb');
 
 module.exports = {
   insertJob(payloadObj, jobTitle, jobUserName, jobUserEmail) {
+    console.log("hello???")
     const dbName = process.env.DB_NAME;
     const collName = process.env.COL_NAME;
     const username = process.env.USERNAME;
     const secret = process.env.SECRET;
+    console.log("hello????", dbName, collName, username, secret);
     // create the new job document
     const newJob = {
       title: jobTitle,
@@ -26,8 +28,6 @@ module.exports = {
       logs: {},
     };
 
-    // we are looking for jobs in the queue with the same payload
-    // that have not yet started (startTime == null)
     const filterDoc = { payload: payloadObj, status: { $in: ['inProgress', 'inQueue'] } };
     const updateDoc = { $setOnInsert: newJob };
 
@@ -235,7 +235,6 @@ module.exports = {
                 console.log("error reading patch file: ", err);
                 reject(err);
               }
-              console.log(data)
               resolve(data);
             });
         })
@@ -252,14 +251,13 @@ module.exports = {
         const patchCommand = 'git show HEAD > myPatch.patch';
         exec(patchCommand)
           .then(() => {
-            fs.readFile('myPatch.patch', 'utf8')
-              .then((data) => {
-                resolve(data);
-              })
-              .catch((error) => {
-                console.log('error reading patch file', error);
-                reject(error);
-              });
+            fs.readFile('myPatch.patch', 'utf8', (err, data) => {
+              if (err) {
+                console.log("error reading patch file: ", err);
+                reject(err);
+              }
+              resolve(data);
+            });
           })
           .catch((error) => {
             console.error('error generating patch: ', error);
@@ -269,14 +267,13 @@ module.exports = {
         const patchCommand = `git diff ${firstCommit}^...${lastCommit} > myPatch.patch`;
         exec(patchCommand)
           .then(() => {
-            fs.readFile('myPatch.patch', 'utf8')
-              .then((data) => {
-                resolve(data);
-              })
-              .catch((error) => {
-                console.log('error reading patch file', error);
-                reject(error);
-              });
+            fs.readFile('myPatch.patch', 'utf8', (err, data) => {
+              if (err) {
+                console.log("error reading patch file: ", err);
+                reject(err);
+              }
+              resolve(data);
+            });
           })
           .catch((error) => {
             console.error('error generating patch: ', error);
