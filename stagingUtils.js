@@ -201,29 +201,32 @@ module.exports = {
   },
 
   async getGitCommits() {
-    const result = await exec("git cherry");
-    console.log("this is stdout!! " , stdout);
-    const cleanedup = result.stdout.replace(/\+ /g, "");
-    const commitarray = cleanedup.split(/\r\n|\r|\n/);
-    commitarray.pop(); // remove the last, dummy element that results from splitting on newline
-    if (commitarray.length === 0) {
-      console.error(
-        "You have tried to create a staging job from local commits but you have no committed work. Please make commits and then try again"
-      );
-      process.exit();
-    }
-    if (commitarray.length === 1) {
+    try {
+      const result = await exec("git cherry");
+      const cleanedup = result.stdout.replace(/\+ /g, "");
+      const commitarray = cleanedup.split(/\r\n|\r|\n/);
+      commitarray.pop(); // remove the last, dummy element that results from splitting on newline
+      if (commitarray.length === 0) {
+        console.error(
+          "You have tried to create a staging job from local commits but you have no committed work. Please make commits and then try again"
+        );
+        process.exit();
+      }
+      if (commitarray.length === 1) {
+        const firstCommit = commitarray[0];
+        const lastCommit = null;
+        return { firstCommit, lastCommit };
+      }
       const firstCommit = commitarray[0];
-      const lastCommit = null;
+      const lastCommit = commitarray[commitarray.length - 1];
       return { firstCommit, lastCommit };
+    } catch (error) {
+      console.log("error getting git commits cherry")
     }
-    const firstCommit = commitarray[0];
-    const lastCommit = commitarray[commitarray.length - 1];
-    return { firstCommit, lastCommit };
+
   },
 
   getUpstreamName(upstream) {
-    console.log("yoooo ", upstream);
     const upstreamInd = upstream.indexOf("origin/");
     if (upstreamInd === -1) {
       return upstream;
