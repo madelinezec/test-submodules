@@ -95,9 +95,12 @@ async function main() {
     console.log("we in")
     let firstCommit; 
     let lastCommit;
+
     try {
       console.log("we are inside the try")
-      let [firstCommit, lastCommit ] = await StagingUtils.getGitCommits();
+      const commits = await StagingUtils.getGitCommits();
+      firstCommit = commits[0];
+      lastCommit = commits[1];
       console.log("there was not an error ", firstCommit, lastCommit)
     } catch (error) {
       console.error(error);
