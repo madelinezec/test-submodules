@@ -180,6 +180,7 @@ module.exports = {
         const err = new Error(
           "You have tried to create a staging job from local commits but you have no committed work. Please make commits and then try again"
         );
+        console.error(err)
         throw err
       }
       if (commitarray.length === 1) {
@@ -191,7 +192,9 @@ module.exports = {
       const lastCommit = commitarray[commitarray.length - 1];
       return { firstCommit, lastCommit };
     } catch (error) {
-      console.log("error getting git commits cherry")
+      const err = new Error("error getting git commits cherry")
+      console.error(err);
+      throw err
     }
 
   },
@@ -217,7 +220,7 @@ module.exports = {
           \n\n \
           git branch -u <upstream-branch-name>\
           \n\n";
-        
+        console.error(errormsg)
         throw errormsg
         //return something or throw exception and catch it - inside of app.js catch, return instead of process.exit()
         
@@ -317,6 +320,7 @@ module.exports = {
       const err = new Error(
         `The ~/.config/.snootyenv file is found but does not contain the following required fields: ${missingConfigs.toString()}`
       );
+      console.error(err)
       throw err;
     }
   }
