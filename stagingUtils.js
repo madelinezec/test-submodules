@@ -183,7 +183,7 @@ module.exports = {
           "You have tried to create a staging job from local commits but you have no committed work. Please make commits and then try again"
         );
         console.error(err)
-        return err
+        return {};
       }
       if (commitarray.length === 1) {
         const firstCommit = commitarray[0];
