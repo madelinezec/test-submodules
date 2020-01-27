@@ -85,7 +85,6 @@ async function main() {
   
   try {
     doesRemoteHaveLocalBranch = await StagingUtils.doesRemoteHaveLocalBranch(branchName);
-    console.log("woooo here!!!!!")
   } catch (error) {
     return;
   }
@@ -94,21 +93,18 @@ async function main() {
 
   // toggle btwn create patch from commits or what you have saved locally
   if (patchFlag === "commit") {
-    console.log("we in")
     let firstCommit; 
     let lastCommit;
 
     try {
-      console.log("we are inside the try")
       const commits = await StagingUtils.getGitCommits();
       firstCommit = commits[0];
       lastCommit = commits[1];
-      console.log("there was not an error ", firstCommit, lastCommit)
     } catch (error) {
       console.error(error);
       return;
     }
-    console.log("trying to create patch ", firstCommit, lastCommit)
+
     const patch = await StagingUtils.getGitPatchFromCommits(
       firstCommit,
       lastCommit
