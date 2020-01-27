@@ -178,7 +178,7 @@ module.exports = {
         .then((result) => {
           console.log(result)
           const cleanedup = result.stdout.replace(/\+ /g, "");
-          commitarray = cleanedup.split(/\r\n|\r|\n/);
+          const commitarray = cleanedup.split(/\r\n|\r|\n/);
           commitarray.pop(); // remove the last, dummy element that results from splitting on newline
           if (commitarray.length === 0) {
             const err = new Error(
