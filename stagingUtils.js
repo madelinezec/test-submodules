@@ -50,6 +50,8 @@ module.exports = {
       });
 
       if (result.upsertedId) {
+        console.log(result.upsertedId._id)
+        console.log(JSON.stringify(result.upsertedId)._id)
         console.log(
           `You successfully enqued a staging job to docs autobuilder. This is the record id: ${JSON.stringify(result.upsertedId)}`
         );
