@@ -51,21 +51,25 @@ module.exports = {
       const result = await collection.updateOne(filterDoc, updateDoc, {
         upsert: true
       });
-      console.log(result);
+
       if (result.upsertedId) {
         console.log(
           `You successfully enqued a staging job to docs autobuilder. This is the record id: ${result.upsertedId}`
         );
+        client.close();
         return true;
       }
+      client.close();
       console.log("This job already exists ");
       return "Already Existed";
     } catch (error) {
-      console.log("we got an error!!!! ", error);
+      console.error(`There was an error enqueing a staging job to docs autobuilder. Here is the error: ${error}`);
+      client.close();
+      return error;
     }
 
     // close connection
-    client.close();
+    
 
     // client.connect((err) => {
     //   if (err) {
