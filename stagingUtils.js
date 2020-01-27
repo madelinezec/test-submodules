@@ -5,12 +5,10 @@ const { MongoClient } = require("mongodb");
 
 module.exports = {
   async insertJob(payloadObj, jobTitle, jobUserName, jobUserEmail) {
-    console.log("hello???");
     const dbName = process.env.DB_NAME;
     const collName = process.env.COL_NAME;
     const username = process.env.USERNAME;
     const secret = process.env.SECRET;
-    console.log("hello????", dbName, collName, username, secret);
     // create the new job document
     const newJob = {
       title: jobTitle,
@@ -36,8 +34,6 @@ module.exports = {
 
     const uri = `mongodb+srv://${username}:${secret}@cluster0-ylwlz.mongodb.net/test?retryWrites=true&w=majority`;
     // connect to your cluster
-    //const client = new MongoClient(uri, { useUnifiedTopology: true, useNewUrlParser: true });
-
     const client = await MongoClient.connect(uri, {
       useNewUrlParser: true,
       useUnifiedTopology: true
@@ -46,6 +42,7 @@ module.exports = {
     // specify the DB's name
     const collection = client.db(dbName).collection(collName);
     
+    let resultOfQuery;
     // execute update query
     try {
       const result = await collection.updateOne(filterDoc, updateDoc, {
@@ -56,18 +53,23 @@ module.exports = {
         console.log(
           `You successfully enqued a staging job to docs autobuilder. This is the record id: ${result.stdout.upsertedId}`
         );
-        client.close();
-        return true;
+        //client.close();
+        resultOfQuery = true;
+        //return true
       }
-      client.close();
+      //client.close();
       console.log("This job already exists ");
-      return "Already Existed";
+      resultOfQuery = "Already Existed";
+      //return "Already Existed"
     } catch (error) {
       console.error(`There was an error enqueing a staging job to docs autobuilder. Here is the error: ${error}`);
-      client.close();
-      return error;
+     // client.close();
+      resultOfQuery = error
+      // return error;
     }
 
+    client.close()
+    return resultOfQuery
   },
 
   createPayload(
