@@ -189,7 +189,7 @@ module.exports = {
           if (commitarray.length === 1) {
             const firstCommit = commitarray[0];
             const lastCommit = null;
-            console.log("hiiiiii")
+            console.log("hiiiiii ", firstCommit, lastCommit);
             resolve([firstCommit, lastCommit]);
           }
           const firstCommit = commitarray[0];
