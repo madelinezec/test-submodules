@@ -49,7 +49,7 @@ async function main() {
       firstCommit,
       lastCommit
     );
-    const payLoad = await StagingUtils.createPayload(
+    const payLoad = StagingUtils.createPayload(
       repoName,
       branchNameForPayload,
       userName,
@@ -74,7 +74,7 @@ async function main() {
 
   if (patchFlag === "local") {
     const patch = await StagingUtils.getGitPatchFromLocal(upstreamName);
-    const payLoad = await StagingUtils.createPayload(
+    const payLoad = StagingUtils.createPayload(
       repoName,
       branchNameForPayload,
       userName,
@@ -86,7 +86,7 @@ async function main() {
 
     try {
       console.log("we are trying!!!!!");
-      StagingUtils.insertJob(
+      await StagingUtils.insertJob(
         payLoad,
         `Github Push: ${userName}/repoName`,
         userName,

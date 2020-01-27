@@ -4,7 +4,7 @@ const fs = require('fs');
 const { MongoClient } = require('mongodb');
 
 module.exports = {
-  insertJob(payloadObj, jobTitle, jobUserName, jobUserEmail) {
+  async insertJob(payloadObj, jobTitle, jobUserName, jobUserEmail) {
     console.log("hello???")
     const dbName = process.env.DB_NAME;
     const collName = process.env.COL_NAME;
@@ -32,30 +32,45 @@ module.exports = {
     const updateDoc = { $setOnInsert: newJob };
 
     const uri = `mongodb+srv://${username}:${secret}@cluster0-ylwlz.mongodb.net/test?retryWrites=true&w=majority`;
+    // connect to your cluster
     const client = new MongoClient(uri, { useUnifiedTopology: true, useNewUrlParser: true });
-    client.connect((err) => {
-      if (err) {
-        console.error('error connecting to Mongo');
-        return err;
-      }
-      const collection = client.db(dbName).collection(collName);
+  
+    // specify the DB's name
+    const collection = client.db(dbName).collection(collName);
+    // execute find query
+    // const items = await db.collection('items').find({}).toArray();
+    const result = await collection.updateOne(filterDoc, updateDoc, { upsert: true });
+    
+    console.log(result);
+    // close connection
+    client.close();
+    
+    
+    
+    // client.connect((err) => {
+    //   if (err) {
+    //     console.error('error connecting to Mongo');
+    //     return err;
+    //   }
+    //   const collection = client.db(dbName).collection(collName);
 
-      collection.updateOne(filterDoc, updateDoc, { upsert: true }).then(
-        (result) => {
-          if (result.upsertedId) {
-            console.log(`You successfully enqued a staging job to docs autobuilder. This is the record id: ${result.upsertedId}`);
-            return true;
-          }
-          console.log('This job already exists ');
-          return 'Already Existed';
-        },
-        (error) => {
-          console.error(`There was an error enqueing a staging job to docs autobuilder. Here is the error: ${error}`);
-          return error;
-        },
-      );
-      client.close();
-    });
+    //   collection.updateOne(filterDoc, updateDoc, { upsert: true }).then(
+    //     (result) => {
+    //       if (result.upsertedId) {
+    //         console.log(`You successfully enqued a staging job to docs autobuilder. This is the record id: ${result.upsertedId}`);
+    //         return true;
+    //       }
+    //       console.log('This job already exists ');
+    //       return 'Already Existed';
+    //     },
+    //     (error) => {
+    //       console.error(`There was an error enqueing a staging job to docs autobuilder. Here is the error: ${error}`);
+    //       return error;
+    //     },
+    //   );
+    //   console.log("about to close!!!!");
+    //   client.close();
+    // });
   },
 
   createPayload(
