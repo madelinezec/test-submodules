@@ -98,7 +98,7 @@ async function main() {
       console.error(error);
       return;
     }
-    
+    console.log("trying to create patch")
     const patch = await StagingUtils.getGitPatchFromCommits(
       firstCommit,
       lastCommit

@@ -5,6 +5,7 @@ const { MongoClient } = require("mongodb");
 
 module.exports = {
   async insertJob(payloadObj, jobTitle, jobUserName, jobUserEmail) {
+    console.log("we are inserting the job");
     const dbName = process.env.DB_NAME;
     const collName = process.env.COL_NAME;
     const username = process.env.USERNAME;
