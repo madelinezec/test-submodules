@@ -51,7 +51,7 @@ module.exports = {
 
       if (result.upsertedId) {
         console.log(
-          `You successfully enqued a staging job to docs autobuilder. This is the record id: ${result.upsertedId}`
+          `You successfully enqued a staging job to docs autobuilder. This is the record id: ${JSON.stringify(result.upsertedId)}`
         );
         client.close();
         return true
