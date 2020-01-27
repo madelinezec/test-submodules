@@ -55,21 +55,21 @@ module.exports = {
         );
         //client.close();
         resultOfQuery = true;
-        //return true
+        return true
       }
       //client.close();
       console.log("This job already exists ");
       resultOfQuery = "Already Existed";
-      //return "Already Existed"
+      return "Already Existed"
     } catch (error) {
       console.error(`There was an error enqueing a staging job to docs autobuilder. Here is the error: ${error}`);
      // client.close();
       resultOfQuery = error
-      // return error;
+       return error;
     }
 
     client.close()
-    return resultOfQuery
+    // return resultOfQuery
   },
 
   createPayload(
