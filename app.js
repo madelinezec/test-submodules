@@ -98,7 +98,6 @@ async function main() {
       if(firstCommit === null){
         return
       }
-      
     } catch (error) {
       console.log("hoorah we caught without throwing an error!!!");
       return;
