@@ -171,17 +171,19 @@ module.exports = {
   },
 
   async getGitCommits() {
+    let commitarray;
+
     try {
       const result = await exec("git cherry");
       const cleanedup = result.stdout.replace(/\+ /g, "");
-      const commitarray = cleanedup.split(/\r\n|\r|\n/);
+      commitarray = cleanedup.split(/\r\n|\r|\n/);
       commitarray.pop(); // remove the last, dummy element that results from splitting on newline
       if (commitarray.length === 0) {
         const err = new Error(
           "You have tried to create a staging job from local commits but you have no committed work. Please make commits and then try again"
         );
         console.error(err)
-        throw err
+        return err
       }
       if (commitarray.length === 1) {
         const firstCommit = commitarray[0];
@@ -195,6 +197,7 @@ module.exports = {
       const err = new Error("error getting git commits cherry")
       console.error(err);
       throw err
+      
     }
 
   },

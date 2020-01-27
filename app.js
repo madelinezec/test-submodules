@@ -92,7 +92,17 @@ async function main() {
   // toggle btwn create patch from commits or what you have saved locally
   if (patchFlag === "commit") {
 
-    const { firstCommit, lastCommit } = await StagingUtils.getGitCommits();
+    try {
+      let { firstCommit, lastCommit } = await StagingUtils.getGitCommits();
+      if( firstCommit === Error){
+        console.log("this is an error!!!")
+        return
+      }
+      console.log(firstCommit);
+    } catch (error) {
+      console.log("hoorah we caught without throwing an error!!!");
+    }
+    
     const patch = await StagingUtils.getGitPatchFromCommits(
       firstCommit,
       lastCommit
