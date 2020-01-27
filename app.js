@@ -12,6 +12,7 @@ async function main() {
   let branchName;
   let repoName;
   const newHead = "newHead";
+  
   try {
     StagingUtils.validateConfiguration();
   } catch (error) {
@@ -82,6 +83,7 @@ async function main() {
   
   try {
     doesRemoteHaveLocalBranch = await StagingUtils.doesRemoteHaveLocalBranch(branchName);
+    console.log("woooo here!!!!!")
   } catch (error) {
     return;
   }
