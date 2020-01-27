@@ -248,10 +248,10 @@ module.exports = {
           git branch -u <upstream-branch-name>\
           \n\n";
         console.error(errormsg);
-        return errormsg;
+        process.exit();
       }
       console.error(error);
-      return error;
+      process.exit();
     }
   },
 
