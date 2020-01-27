@@ -33,7 +33,7 @@ module.exports = {
 
     const uri = `mongodb+srv://${username}:${secret}@cluster0-ylwlz.mongodb.net/test?retryWrites=true&w=majority`;
     // connect to your cluster
-    const client = new MongoClient(uri, { useUnifiedTopology: true, useNewUrlParser: true });
+    //const client = new MongoClient(uri, { useUnifiedTopology: true, useNewUrlParser: true });
     
     const client = await MongoClient.connect(uri, { 
       useNewUrlParser: true, 
