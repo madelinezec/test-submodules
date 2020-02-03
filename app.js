@@ -52,7 +52,8 @@ async function main() {
     return
   }
 
-  let repoOwner = StagingUtils.getGitUser(url);
+  const repoOwner = StagingUtils.getGitUser(url);
+
   try {
     repoName = StagingUtils.getRepoName(url);
   } catch (error) {
