@@ -41,11 +41,11 @@ async function main() {
     return;
   }
 
-  try {
-    userName = await StagingUtils.getGitUser();
-  } catch (error) {
-    return
-  }
+  // try {
+  //   userName = await StagingUtils.getGitUser();
+  // } catch (error) {
+  //   return
+  // }
   
   try {
     userEmail = await StagingUtils.getGitEmail();
@@ -58,7 +58,7 @@ async function main() {
   } catch (error) {
     return
   }
-  
+  userName = StagingUtils.getGitUser(url);
   try {
     repoName = StagingUtils.getRepoName(url);
   } catch (error) {
@@ -119,16 +119,16 @@ async function main() {
       newHead
     );
 
-    try {
-      StagingUtils.insertJob(
-        payLoad,
-        `Github Push: ${userName}/${repoName}`,
-        userName,
-        userEmail
-      );
-    } catch (error) {
-      console.error(err);
-    }
+    // try {
+    //   StagingUtils.insertJob(
+    //     payLoad,
+    //     `Github Push: ${userName}/${repoName}`,
+    //     userName,
+    //     userEmail
+    //   );
+    // } catch (error) {
+    //   console.error(err);
+    // }
   }
 
   if (patchFlag === "local") {
@@ -143,16 +143,16 @@ async function main() {
       newHead
     );
 
-    try {
-      await StagingUtils.insertJob(
-        payLoad,
-        `Github Push: ${userName}/${repoName}`,
-        userName,
-        userEmail
-      );
-    } catch (error) {
-      console.error(err);
-    }
+    // try {
+    //   await StagingUtils.insertJob(
+    //     payLoad,
+    //     `Github Push: ${userName}/${repoName}`,
+    //     userName,
+    //     userEmail
+    //   );
+    // } catch (error) {
+    //   console.error(err);
+    // }
 
 
   }

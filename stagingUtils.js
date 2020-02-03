@@ -85,7 +85,7 @@ module.exports = {
       branchName: upstreamBranchName,
       isFork: true,
       private: false,
-      isXlarge: false,
+      isXlarge: true,
       repoOwner: repoOwnerArg,
       url: urlArg,
       newHead: lastCommit,
@@ -158,17 +158,21 @@ module.exports = {
     });
   },
 
-  async getGitUser() {
-    return new Promise((resolve, reject) => {
-      exec("git config --global user.name")
-        .then(result => {
-          resolve(result.stdout.replace("\n", ""));
-        })
-        .catch(error => {
-          console.error(`exec error: ${error}`);
-          reject(error);
-        });
-    });
+  async getGitUser(url) {
+    // return new Promise((resolve, reject) => {
+      let repoOwner = url.split("/");
+      repoOwner = repoOwner[repoOwner.length - 2];
+      console.log(repoOwner);
+      return repoOwner
+      // exec("git config --global user.name")
+      //   .then(result => {
+      //     resolve(result.stdout.replace("\n", ""));
+      //   })
+      //   .catch(error => {
+      //     console.error(`exec error: ${error}`);
+      //     reject(error);
+      //   });
+    // });
   },
 
   async getGitCommits() {
