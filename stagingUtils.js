@@ -161,7 +161,7 @@ module.exports = {
   async getGitUser(url) {
     let repoOwner = url.split("/");
     repoOwner = repoOwner[repoOwner.length - 2];
-    console.log(repoOwner);
+    console.log(repoOwner, typeof repoOwner);
     return repoOwner;
   },
 

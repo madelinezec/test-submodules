@@ -112,7 +112,7 @@ async function main() {
       buildSize,
       newHead
     );
-
+      console.log(payLoad)
     try {
       StagingUtils.insertJob(
         payLoad,
