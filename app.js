@@ -11,7 +11,6 @@ async function main() {
   let doesRemoteHaveLocalBranch;
   let branchName;
   let repoName;
-  let userName;
   let userEmail;
   const newHead = "newHead";
   
@@ -40,12 +39,6 @@ async function main() {
   if (invalidFlag === true) {
     return;
   }
-
-  // try {
-  //   userName = await StagingUtils.getGitUser();
-  // } catch (error) {
-  //   return
-  // }
   
   try {
     userEmail = await StagingUtils.getGitEmail();
@@ -58,7 +51,8 @@ async function main() {
   } catch (error) {
     return
   }
-  userName = StagingUtils.getGitUser(url);
+
+  let repoOwner = StagingUtils.getGitUser(url);
   try {
     repoName = StagingUtils.getRepoName(url);
   } catch (error) {
@@ -112,23 +106,23 @@ async function main() {
     const payLoad = StagingUtils.createPayload(
       repoName,
       branchNameForPayload,
-      userName,
+      repoOwner,
       url,
       patch,
       buildSize,
       newHead
     );
 
-    // try {
-    //   StagingUtils.insertJob(
-    //     payLoad,
-    //     `Github Push: ${userName}/${repoName}`,
-    //     userName,
-    //     userEmail
-    //   );
-    // } catch (error) {
-    //   console.error(err);
-    // }
+    try {
+      StagingUtils.insertJob(
+        payLoad,
+        `Github Push: ${repoOwner}/${repoName}`,
+        repoOwner,
+        userEmail
+      );
+    } catch (error) {
+      console.error(err);
+    }
   }
 
   if (patchFlag === "local") {
@@ -136,23 +130,23 @@ async function main() {
     const payLoad = StagingUtils.createPayload(
       repoName,
       branchNameForPayload,
-      userName,
+      repoOwner,
       url,
       patch,
       buildSize,
       newHead
     );
 
-    // try {
-    //   await StagingUtils.insertJob(
-    //     payLoad,
-    //     `Github Push: ${userName}/${repoName}`,
-    //     userName,
-    //     userEmail
-    //   );
-    // } catch (error) {
-    //   console.error(err);
-    // }
+    try {
+      await StagingUtils.insertJob(
+        payLoad,
+        `Github Push: ${repoOwner}/${repoName}`,
+        repoOwner,
+        userEmail
+      );
+    } catch (error) {
+      console.error(err);
+    }
 
 
   }
