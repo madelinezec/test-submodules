@@ -1,6 +1,6 @@
 {
   "name": "test-submodules",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Script for staging server docs",
   "main": "app.js",
   "dependencies": {
