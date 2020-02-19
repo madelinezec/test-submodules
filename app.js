@@ -60,7 +60,7 @@ async function main() {
   }
 
   try {
-    upstreamOwnerAndName = await StagingUtils.getupstreamRepo();
+    upstreamOwnerAndName = await StagingUtils.getUpstreamRepo();
   } catch (error) {
     console.error(error);
     return;
