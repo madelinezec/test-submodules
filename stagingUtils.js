@@ -204,7 +204,8 @@ module.exports = {
       // upstreambranch = upstreambranch.replace('.git', '');
       // upstreambranch = upstreambranch.replace('git@github.com:', '');
       // upstreambranch = upstreambranch.replace(' (fetch)', '');
-      upstreambranch = upstreambranch.replace(/(\S)+[:]((\S)+)/g, '');
+     // upstreambranch = upstreambranch.replace(/(\S)+[:]((\S)+)/g, '');
+     upstreambranch = upstreambranch.split(/(\S)+[:]((\S)+)/)
       console.log("after cleaning: ", upstreambranch);
       return upstreambranch;
     } catch (error) {
