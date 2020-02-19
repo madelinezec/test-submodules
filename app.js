@@ -74,10 +74,10 @@ async function main() {
     return;
   }
 
-  const [repoOwner, repoName] = upstreamOwnerAndName.split('/');
+  let [repoOwner, repoName] = upstreamOwnerAndName.split('/');
   const branchName = upstreamConfig.split('/')[1];
   const url = `https://github.com/${repoOwner}/${repoName}`;
-
+  repoName = repoName.replace('')
   // toggle btwn create patch from commits or what you have saved locally
   if (patchFlag === 'commit') {
     let firstCommit;
