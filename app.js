@@ -76,7 +76,7 @@ async function main() {
 
   const [repoOwner, repoName] = upstreamOwnerAndName.split('/');
   const branchName = upstreamConfig.split('/')[1];
-  const url = `https://github.com/${repoOwner}/${repoName}.git`;
+  const url = `https://github.com/${repoOwner}/${repoName}`;
 
   // toggle btwn create patch from commits or what you have saved locally
   if (patchFlag === 'commit') {
@@ -107,7 +107,7 @@ async function main() {
       newHead,
       localBranch,
     );
-
+      console.log(payLoad);
 
     // try {
     //   StagingUtils.insertJob(
@@ -134,7 +134,7 @@ async function main() {
       newHead,
       localBranch,
     );
-
+    console.log(payLoad)
     // try {
     //   await StagingUtils.insertJob(
     //     payLoad,

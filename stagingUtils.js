@@ -201,13 +201,9 @@ module.exports = {
       const configArray = forkConfig.split('\n');
 
       let upstreamRepo = (configArray[2].replace('upstream', ''));
-      // upstreamRepo = upstreamRepo.replace('.git', '');
-      // upstreamRepo = upstreamRepo.replace('git@github.com:', '');
-      // upstreamRepo = upstreamRepo.replace(' (fetch)', '');
-     // upstreamRepo = upstreamRepo.replace(/(\S)+[:]((\S)+)/g, '');
-     upstreamRepo = upstreamRepo.split(/(\S)+[:]((\S)+)/);
+      upstreamRepo = upstreamRepo.split(/(\S)+[:]((\S)+)/);
       upstreamRepo = upstreamRepo[2];
-      // upstreamRepo = upstreamRepo.split()
+
       console.log("after cleaning: ", upstreamRepo);
       return upstreamRepo;
     } catch (error) {
