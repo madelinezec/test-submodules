@@ -205,6 +205,7 @@ module.exports = {
           let upstreamRepo = (configArray[i].replace('upstream', ''));
           upstreamRepo = upstreamRepo.split(/(\S)+[:]((\S)+)/);
           upstreamRepo = upstreamRepo[2];
+          console.log("this is what u need to return ", upstreamRepo)
           return upstreamRepo;
         }
       }

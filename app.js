@@ -96,55 +96,55 @@ async function main() {
       lastCommit,
     );
 
-    const payLoad = StagingUtils.createPayload(
-      repoName,
-      branchName,
-      upstreamConfig,
-      repoOwner,
-      url,
-      patch,
-      buildSize,
-      newHead,
-      localBranch,
-    );
-      console.log(payLoad);
+    // const payLoad = StagingUtils.createPayload(
+    //   repoName,
+    //   branchName,
+    //   upstreamConfig,
+    //   repoOwner,
+    //   url,
+    //   patch,
+    //   buildSize,
+    //   newHead,
+    //   localBranch,
+    // );
+    //   console.log(payLoad);
 
-     try {
-       StagingUtils.insertJob(
-         payLoad,
-         `Github Push from Server Staging Scripts: ${repoOwner}/${repoName}`,
-         user,
-         userEmail,
-       );
-     } catch (error) {
-       console.error(error);
-     }
+    //  try {
+    //    StagingUtils.insertJob(
+    //      payLoad,
+    //      `Github Push from Server Staging Scripts: ${repoOwner}/${repoName}`,
+    //      user,
+    //      userEmail,
+    //    );
+    //  } catch (error) {
+    //    console.error(error);
+    //  }
   }
 
-  if (patchFlag === 'local') {
-    const patch = await StagingUtils.getGitPatchFromLocal(upstreamConfig);
-    const payLoad = StagingUtils.createPayload(
-      repoName,
-      branchName,
-      upstreamConfig,
-      repoOwner,
-      url,
-      patch,
-      buildSize,
-      newHead,
-      localBranch,
-    );
-    console.log(payLoad)
-     try {
-       await StagingUtils.insertJob(
-         payLoad,
-         `Github Push: ${user}/${repoName}`,
-         user,
-         userEmail,
-       );
-     } catch (error) {
-       console.error(error);
-     }
+   if (patchFlag === 'local') {
+  //   const patch = await StagingUtils.getGitPatchFromLocal(upstreamConfig);
+  //   const payLoad = StagingUtils.createPayload(
+  //     repoName,
+  //     branchName,
+  //     upstreamConfig,
+  //     repoOwner,
+  //     url,
+  //     patch,
+  //     buildSize,
+  //     newHead,
+  //     localBranch,
+  //   );
+  //   console.log(payLoad)
+  //    try {
+  //      await StagingUtils.insertJob(
+  //        payLoad,
+  //        `Github Push: ${user}/${repoName}`,
+  //        user,
+  //        userEmail,
+  //      );
+  //    } catch (error) {
+  //      console.error(error);
+  //    }
   }
 
   await StagingUtils.deletePatchFile();
