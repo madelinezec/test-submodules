@@ -205,10 +205,7 @@ module.exports = {
       upstreamRepo = upstreamRepo.split(/(\S)+[:]((\S)+)/);
       upstreamRepo = upstreamRepo[2];
       console.log("this is what u need to return ", upstreamRepo)
-      return upstreamRepo;
-        
-      }
-
+      
       console.log("after cleaning: ", upstreamRepo);
       return upstreamRepo;
     } catch (error) {
