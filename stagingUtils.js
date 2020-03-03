@@ -199,10 +199,15 @@ module.exports = {
     try {
       const forkConfig = (await exec('git remote -v')).stdout;
       const configArray = forkConfig.split('\n');
-
-      let upstreamRepo = (configArray[2].replace('upstream', ''));
-      upstreamRepo = upstreamRepo.split(/(\S)+[:]((\S)+)/);
-      upstreamRepo = upstreamRepo[2];
+      
+      for (let i = 0; i < configArray.length; i++) {
+        if (configArray[i].indexOf('upstream') > -1) {
+          let upstreamRepo = (configArray[i].replace('upstream', ''));
+          upstreamRepo = upstreamRepo.split(/(\S)+[:]((\S)+)/);
+          upstreamRepo = upstreamRepo[2];
+          return upstreamRepo;
+        }
+      }
 
       console.log("after cleaning: ", upstreamRepo);
       return upstreamRepo;
