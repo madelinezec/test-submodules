@@ -197,17 +197,16 @@ module.exports = {
 
   async getUpstreamRepo() {
     try {
-      const forkConfig = (await exec('git remote -v')).stdout;
+      const forkConfig = (await exec('git remote get-url upstream')).stdout;
       const configArray = forkConfig.split('\n');
       
-      for (let i = 0; i < configArray.length; i++) {
-        if (configArray[i].indexOf('upstream') > -1) {
-          let upstreamRepo = (configArray[i].replace('upstream', ''));
-          upstreamRepo = upstreamRepo.split(/(\S)+[:]((\S)+)/);
-          upstreamRepo = upstreamRepo[2];
-          console.log("this is what u need to return ", upstreamRepo)
-          return upstreamRepo;
-        }
+
+      let upstreamRepo = (configArray[i].replace('upstream', ''));
+      upstreamRepo = upstreamRepo.split(/(\S)+[:]((\S)+)/);
+      upstreamRepo = upstreamRepo[2];
+      console.log("this is what u need to return ", upstreamRepo)
+      return upstreamRepo;
+        
       }
 
       console.log("after cleaning: ", upstreamRepo);
