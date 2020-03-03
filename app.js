@@ -147,7 +147,7 @@ async function main() {
   //    }
   }
 
-  await StagingUtils.deletePatchFile();
+  // await StagingUtils.deletePatchFile();
 }
 
 main();
