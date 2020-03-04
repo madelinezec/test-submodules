@@ -200,8 +200,8 @@ module.exports = {
       const forkConfig = (await exec('git remote get-url upstream')).stdout;
       const configArray = forkConfig.split('\n');
       
-
-      let upstreamRepo = (configArray[i].replace('upstream', ''));
+      
+      let upstreamRepo = (forkConfig.replace('upstream', ''));
       upstreamRepo = upstreamRepo.split(/(\S)+[:]((\S)+)/);
       upstreamRepo = upstreamRepo[2];
       console.log("this is what u need to return ", upstreamRepo)
