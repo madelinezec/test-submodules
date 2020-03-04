@@ -143,7 +143,7 @@ module.exports = {
         .then(() => {
           fs.readFile('visibility.txt', 'utf8', (err, data) => {
             if (err) {
-              console.log('error reading patch file: ', err);
+             // console.log('error reading patch file: ', err);
               return reject(err);
             }
             if (data.includes('HTTP/1.1 200 OK')) {
@@ -154,7 +154,7 @@ module.exports = {
           });
         })
         .catch((error) => {
-          console.error('error generating patch: ', error);
+          //console.error('error generating patch: ', error);
           return reject(error);
         });
     });
