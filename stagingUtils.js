@@ -137,9 +137,9 @@ module.exports = {
 
     let cleanedURL = url.replace('.git', '');
     cleanedURL = cleanedURL.replace(/\r?\n|\r/g, '')
-    console.log(' called with this url: ', url, "aha")
+    console.log(' called with this url: ', cleanedURL, "aha")
     return new Promise((resolve, reject) => {
-      exec(`curl ${url} --head > visibility.txt`)
+      exec(`curl ${cleanedURL} --head > visibility.txt`)
         .then(() => {
           fs.readFile('visibility.txt', 'utf8', (err, data) => {
             if (err) {
