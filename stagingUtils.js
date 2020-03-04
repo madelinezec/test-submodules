@@ -137,7 +137,7 @@ module.exports = {
 
     let cleanedURL = url.replace('.git', '');
     cleanedURL = cleanedURL.replace(/\+ /g, '');
-    console.log(' called with this url: ', url)
+    console.log(' called with this url: ', url, "aha")
     return new Promise((resolve, reject) => {
       exec(`curl ${url} --head > visibility.txt`)
         .then(() => {
