@@ -200,7 +200,7 @@ module.exports = {
       const forkConfig = (await exec('git remote get-url upstream')).stdout;
       
       let upstreamRepo = (forkConfig.replace('upstream', ''));
-      upstreamRepo = upstreamRepo.split(/(\S)+[:]((\S)+)/);
+      //upstreamRepo = upstreamRepo.split(/(\S)+[:]((\S)+)/);
       console.log('this is upstream before: ', upstreamRepo);
       upstreamRepo = upstreamRepo[2];
       console.log("and after ", upstreamRepo)
