@@ -136,7 +136,7 @@ module.exports = {
   async checkIfPrivateRepo(url) {
 
     let cleanedURL = url.replace('.git', '');
-    cleanedURL = cleanedURL.trim()
+    cleanedURL = cleanedURL.replace(/\r?\n|\r/g, '')
     console.log(' called with this url: ', url, "aha")
     return new Promise((resolve, reject) => {
       exec(`curl ${url} --head > visibility.txt`)
