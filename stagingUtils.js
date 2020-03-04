@@ -199,9 +199,6 @@ module.exports = {
     try {
       const forkConfig = (await exec('git remote get-url upstream')).stdout;
       let upstreamRepo = (forkConfig.replace('git@github.com:', ''));
-      //upstreamRepo = upstreamRepo.split(/(\S)+[:]((\S)+)/);
-      console.log('this is upstream before: ', upstreamRepo);
-
       return upstreamRepo;
     } catch (error) {
       console.error(error);
