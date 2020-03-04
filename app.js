@@ -78,6 +78,7 @@ async function main() {
   const branchName = upstreamConfig.split('/')[1];
   const url = `https://github.com/${repoOwner}/${repoName}`;
   repoName = repoName.replace('.git', '');
+  const visibility = await StagingUtils.checkIfPrivateRepo(url.replace('.git', ''));
   // toggle btwn create patch from commits or what you have saved locally
   if (patchFlag === 'commit') {
     let firstCommit;

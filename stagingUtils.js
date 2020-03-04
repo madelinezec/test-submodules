@@ -133,7 +133,29 @@ module.exports = {
         });
     });
   },
-
+  async checkIfPrivateRepo(url) {
+    console.log(' called with this url: ', url)
+    return new Promise((resolve, reject) => {
+      exec(`curl ${url} --head > visibility.txt`)
+        .then(() => {
+          fs.readFile('visibility.txt', 'utf8', (err, data) => {
+            if (err) {
+              console.log('error reading patch file: ', err);
+              return reject(err);
+            }
+            if (data.includes('HTTP/1.1 200 OK')) {
+              console.log('yay! we\'re ok!!!');
+              return resolve(true);
+            }
+            return resolve(false);
+          });
+        })
+        .catch((error) => {
+          console.error('error generating patch: ', error);
+          return reject(error);
+        });
+    });
+  },
   async getRepoInfo() {
     return new Promise((resolve, reject) => {
       exec('git config --get remote.origin.url')
