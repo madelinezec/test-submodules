@@ -134,27 +134,23 @@ module.exports = {
     });
   },
   async checkIfPrivateRepo(url) {
-
     let cleanedURL = url.replace('.git', '');
-    cleanedURL = cleanedURL.replace(/\r?\n|\r/g, '')
-    console.log(' called with this url: ', cleanedURL, "aha")
+    cleanedURL = cleanedURL.replace(/\r?\n|\r/g, '');
+    
     return new Promise((resolve, reject) => {
       exec(`curl ${cleanedURL} --head > visibility.txt`)
         .then(() => {
           fs.readFile('visibility.txt', 'utf8', (err, data) => {
             if (err) {
-             // console.log('error reading patch file: ', err);
               return reject(err);
             }
             if (data.includes('HTTP/1.1 200 OK')) {
-              console.log('yay! we\'re ok!!!');
               return resolve(true);
             }
             return resolve(false);
           });
         })
         .catch((error) => {
-          //console.error('error generating patch: ', error);
           return reject(error);
         });
     });
@@ -224,6 +220,9 @@ module.exports = {
     try {
       const forkConfig = (await exec('git remote get-url upstream')).stdout;
       let upstreamRepo = (forkConfig.replace('git@github.com:', ''));
+      console.log("before clean " + upstreamRepo + "haha")
+      upstreamRepo = upstreamRepo.replace(/\r?\n|\r/g, '');
+      console.log("after clean " + upstreamRepo + "haha");
       return upstreamRepo;
     } catch (error) {
       console.error(error);
