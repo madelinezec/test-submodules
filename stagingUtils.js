@@ -87,7 +87,7 @@ module.exports = {
       upstream: upstreamConfig,
       localBranchName: localBranchArg,
       isFork: true,
-      private: false,
+      private: true,
       isXlarge: false,
       repoOwner: repoOwnerArg,
       url: urlArg,
@@ -220,9 +220,9 @@ module.exports = {
     try {
       const forkConfig = (await exec('git remote get-url upstream')).stdout;
       let upstreamRepo = (forkConfig.replace('git@github.com:', ''));
-      console.log("before clean " + upstreamRepo + "haha")
+
       upstreamRepo = upstreamRepo.replace(/\r?\n|\r/g, '');
-      console.log("after clean " + upstreamRepo + "haha");
+
       return upstreamRepo;
     } catch (error) {
       console.error(error);
