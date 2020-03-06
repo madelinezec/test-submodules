@@ -78,7 +78,7 @@ async function main() {
   const branchName = upstreamConfig.split('/')[1];
   const url = `https://github.com/${repoOwner}/${repoName}`;
   repoName = repoName.replace('.git', '');
-  const visibility = await StagingUtils.checkIfPrivateRepo(url.replace('.git', ''));
+  const visibility = await StagingUtils.checkIfPrivateRepo(url);
   // toggle btwn create patch from commits or what you have saved locally
   if (patchFlag === 'commit') {
     let firstCommit;
@@ -97,58 +97,58 @@ async function main() {
       lastCommit,
     );
 
-    // const payLoad = StagingUtils.createPayload(
-    //   repoName,
-    //   branchName,
-    //   upstreamConfig,
-    //   repoOwner,
-    //   url,
-    //   patch,
-    //   buildSize,
-    //   newHead,
-    //   localBranch,
-    // );
-    //   console.log(payLoad);
+    const payLoad = StagingUtils.createPayload(
+      repoName,
+      branchName,
+      upstreamConfig,
+      repoOwner,
+      url,
+      patch,
+      buildSize,
+      newHead,
+      localBranch,
+    );
+      console.log(payLoad);
 
-    //  try {
-    //    StagingUtils.insertJob(
-    //      payLoad,
-    //      `Github Push from Server Staging Scripts: ${repoOwner}/${repoName}`,
-    //      user,
-    //      userEmail,
-    //    );
-    //  } catch (error) {
-    //    console.error(error);
-    //  }
+     try {
+       StagingUtils.insertJob(
+         payLoad,
+         `Github Push from Server Staging Scripts: ${repoOwner}/${repoName}`,
+         user,
+         userEmail,
+       );
+     } catch (error) {
+       console.error(error);
+     }
   }
 
    if (patchFlag === 'local') {
-  //   const patch = await StagingUtils.getGitPatchFromLocal(upstreamConfig);
-  //   const payLoad = StagingUtils.createPayload(
-  //     repoName,
-  //     branchName,
-  //     upstreamConfig,
-  //     repoOwner,
-  //     url,
-  //     patch,
-  //     buildSize,
-  //     newHead,
-  //     localBranch,
-  //   );
-  //   console.log(payLoad)
-  //    try {
-  //      await StagingUtils.insertJob(
-  //        payLoad,
-  //        `Github Push: ${user}/${repoName}`,
-  //        user,
-  //        userEmail,
-  //      );
-  //    } catch (error) {
-  //      console.error(error);
-  //    }
+    const patch = await StagingUtils.getGitPatchFromLocal(upstreamConfig);
+    const payLoad = StagingUtils.createPayload(
+      repoName,
+      branchName,
+      upstreamConfig,
+      repoOwner,
+      url,
+      patch,
+      buildSize,
+      newHead,
+      localBranch,
+    );
+    console.log(payLoad)
+     try {
+       await StagingUtils.insertJob(
+         payLoad,
+         `Github Push: ${user}/${repoName}`,
+         user,
+         userEmail,
+       );
+     } catch (error) {
+       console.error(error);
+     }
   }
 
-  // await StagingUtils.deletePatchFile();
+  await StagingUtils.deletePatchFile();
 }
 
 main();
