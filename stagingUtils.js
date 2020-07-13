@@ -88,7 +88,7 @@ module.exports = {
       localBranchName: localBranchArg,
       isFork: true,
       private: true,
-      isXlarge: false,
+      isXlarge: true,
       repoOwner: repoOwnerArg,
       url: urlArg,
       newHead: lastCommit,
@@ -133,28 +133,7 @@ module.exports = {
         });
     });
   },
-  async checkIfPrivateRepo(url) {
-    let cleanedURL = url.replace('.git', '');
-    cleanedURL = cleanedURL.replace(/\r?\n|\r/g, '');
-    
-    return new Promise((resolve, reject) => {
-      exec(`curl ${cleanedURL} --head > visibility.txt`)
-        .then(() => {
-          fs.readFile('visibility.txt', 'utf8', (err, data) => {
-            if (err) {
-              return reject(err);
-            }
-            if (data.includes('HTTP/1.1 200 OK')) {
-              return resolve(true);
-            }
-            return resolve(false);
-          });
-        })
-        .catch((error) => {
-          return reject(error);
-        });
-    });
-  },
+
   async getRepoInfo() {
     return new Promise((resolve, reject) => {
       exec('git config --get remote.origin.url')
@@ -219,10 +198,9 @@ module.exports = {
   async getUpstreamRepo() {
     try {
       const forkConfig = (await exec('git remote get-url upstream')).stdout;
-      let upstreamRepo = (forkConfig.replace('git@github.com:', ''));
-
+      let upstreamRepo = forkConfig.replace('git@github.com:', '');
+      // clean up new line char
       upstreamRepo = upstreamRepo.replace(/\r?\n|\r/g, '');
-
       return upstreamRepo;
     } catch (error) {
       console.error(error);
@@ -252,9 +230,8 @@ module.exports = {
   },
 
   async getGitPatchFromLocal(upstreamBranchName) {
-    console.log(`hello git diff ${upstreamBranchName} --ignore-submodules > myPatch.patch`)
     return new Promise((resolve, reject) => {
-      exec(`git diff ${upstreamBranchName} --ignore-submodules > myPatch.patch`)
+      exec(`git diff master...${upstreamBranchName} --ignore-submodules > myPatch.patch`)
         .then(() => {
           fs.readFile('myPatch.patch', 'utf8', (err, data) => {
             if (err) {
@@ -331,5 +308,5 @@ module.exports = {
       console.error(err);
       throw err;
     }
-  }
+  },
 };
