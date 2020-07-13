@@ -80,21 +80,8 @@ async function main() {
   repoName = repoName.replace('.git', '');
   // toggle btwn create patch from commits or what you have saved locally
   if (patchFlag === 'commit') {
-    let firstCommit;
-    let lastCommit;
 
-    try {
-      const commits = await StagingUtils.getGitCommits();
-      [firstCommit, lastCommit] = commits;
-    } catch (error) {
-      console.error(error);
-      return;
-    }
-
-    const patch = await StagingUtils.getGitPatchFromCommits(
-      firstCommit,
-      lastCommit,
-    );
+    const patch = await StagingUtils.getGitPatchFromCommits();
 
     const payLoad = StagingUtils.createPayload(
       repoName,
